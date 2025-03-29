@@ -15,6 +15,23 @@ const BoardGamesList = () => {
         game.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+
+
+
+    const exampleFetchFunction = async () => {
+      try {
+        let query = new URLSearchParams({phrase : "example"}).toString();
+        let response = await fetch('http://localhost:3001/search?' + query );
+        let result = await response.json();
+        console.log(result);
+        return result;
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+    exampleFetchFunction();
+
+
     return (
         <div className="board-games-container">
             <h2>Board Games</h2>
