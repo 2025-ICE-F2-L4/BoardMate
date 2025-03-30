@@ -27,8 +27,8 @@ const port = 3001
 app.use(express.json(), cors())
 
 app.get('/search', (req, res) => {
-    const { phrase } = req.body;
-    db.query('SELECT * FROM games WHERE name LIKE ?', [phrase], (err, results) => {
+    const { phrase } = req.query;
+    db.query('SELECT * FROM games WHERE name LIKE \'' + '%' + phrase + '%\'', (err, results) => {
         if (err) {
             return res.status(500).json({ error: err.message });
         }
