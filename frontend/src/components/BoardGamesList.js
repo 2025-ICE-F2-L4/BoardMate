@@ -1,41 +1,28 @@
-import React, { useState } from 'react';
-
-const boardGames = [
-    { id: 1, name: 'Catan', minAge: 10, minPlayers: 3, maxPlayers: 4, playTime: '60-120 min' },
-    { id: 2, name: 'Carcassonne', minAge: 7, minPlayers: 2, maxPlayers: 5, playTime: '35-45 min' },
-    { id: 3, name: 'Ticket to Ride', minAge: 8, minPlayers: 2, maxPlayers: 5, playTime: '30-60 min' },
-    { id: 4, name: 'Azul', minAge: 8, minPlayers: 2, maxPlayers: 4, playTime: '30-45 min' },
-    { id: 5, name: '7 Wonders', minAge: 10, minPlayers: 3, maxPlayers: 7, playTime: '30 min' }
-];
+import React, { useState, useEffect } from 'react';
 
 const BoardGamesList = () => {
     const [searchTerm, setSearchTerm] = useState("");
+    const [boardGames, setBoardGames] = useState([]);
 
-    const filteredGames = boardGames.filter(game =>
-        game.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    useEffect(() => {
+        const fetchGames = async () => {
+            try {
+                let query = new URLSearchParams({ phrase: searchTerm }).toString();
+                let response = await fetch("http://localhost:3001/search?" + query);
+                let result = await response.json();
+                setBoardGames(result);
+            } catch (error) {
+                console.error("Error fetching games:", error);
+            }
+        };
 
-
-
-
-    const exampleFetchFunction = async () => {
-      try {
-        let query = new URLSearchParams({phrase : "example"}).toString();
-        let response = await fetch('http://localhost:3001/search?' + query );
-        let result = await response.json();
-        console.log(result);
-        return result;
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
-    exampleFetchFunction();
-
+        fetchGames();
+    }, [searchTerm]);
 
     return (
         <div className="board-games-container">
             <h2>Board Games</h2>
-            
+
             {/* Search Input */}
             <input
                 type="text"
@@ -56,8 +43,8 @@ const BoardGamesList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredGames.length > 0 ? (
-                        filteredGames.map(game => (
+                    {boardGames.length > 0 ? (
+                        boardGames.map(game => (
                             <tr key={game.id}>
                                 <td>{game.name}</td>
                                 <td>{game.minAge}</td>
