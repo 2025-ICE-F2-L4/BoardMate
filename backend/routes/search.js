@@ -4,11 +4,11 @@ const router = express.Router();
 
 router.get("/search", async (req, res) => {
 	const { phrase } = req.query;
-	console.log("Searching " + phrase);
 
 	try {
 		const [results] = await db.query(
-			"SELECT * FROM games WHERE name LIKE '" + "%" + phrase + "%'",
+			"SELECT id, name, minAge, minPlayers, maxPlayers, playTime FROM games WHERE name LIKE ?",
+			["%" + phrase + "%"],
 		);
 		res.json(results);
 	} catch (err) {
