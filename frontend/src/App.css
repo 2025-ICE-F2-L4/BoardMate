@@ -22,7 +22,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  background-color: #93fff8;
+  background-color: #432E8C;
   color: #333;
 }
 
@@ -30,12 +30,12 @@
   font-size: 4rem;
   font-weight: bold;
   padding: 20px;
-  background-color: #00bbff;
-  color: #c70083;
+  background-color: #050326;
+  color: white;
   width: 100%;
   text-align: center;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  -webkit-text-stroke: 2px #4d004c;
+  -webkit-text-stroke: 2px black;
 }
 
 .board-games-table {
@@ -53,30 +53,30 @@
 }
 
 .board-games-table th {
-  background-color: #008bf5;
+  background-color: #432E8C;
   color: white;
   font-weight: bold;
 }
 
 .board-games-table tr {
-  background-color: #fff3f0;
+  background-color: #9a93c4;
 }
 
 .board-games-table tr:hover {
-  background-color: #ffd5cc;
+  background-color: #76709c;
 }
 
 .no-games {
   text-align: center;
   font-style: italic;
-  color: red;
+  color: white;
 }
 
 .search-input {
   width: 100%;
   max-width: 100%;
   padding: 10px;
-  border: 1px solid #007bff;
+  border: 1px solid #6258A6;
   border-radius: 5px;
   font-size: 16px;
   box-sizing: border-box;
@@ -90,7 +90,7 @@
 }
 
 .board-games-container {
-  background-color: #00bbff;
+  background-color: #6258A6;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -101,4 +101,45 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: white;
+}
+
+.clickable-row {
+  cursor: pointer;
+}
+
+/* Add these styles to the existing App.css file */
+
+.game-details {
+  background-color: #6258A6;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 80%;
+  max-width: 800px;
+  margin: 20px auto;
+  color: white;
+}
+
+.back-button {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 8px 16px;
+  background-color: #432E8C;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.back-button:hover {
+  background-color: #351f7a;
+}
+
+.game-info {
+  text-align: left;
+  background-color: #9a93c4;
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 20px;
 }

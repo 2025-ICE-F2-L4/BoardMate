@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const BoardGamesList = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [boardGames, setBoardGames] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchGames = async () => {
@@ -18,6 +20,10 @@ const BoardGamesList = () => {
 
         fetchGames();
     }, [searchTerm]);
+
+    const handleGameClick = (gameId) => {
+        navigate(`/gameDetails?id=${gameId}`);
+    };
 
     return (
         <div className="board-games-container">
@@ -45,7 +51,9 @@ const BoardGamesList = () => {
                 <tbody>
                     {boardGames.length > 0 ? (
                         boardGames.map(game => (
-                            <tr key={game.id}>
+                            <tr key={game.id} 
+                                onClick={() => handleGameClick(game.id)}
+                                className="clickable-row">
                                 <td>{game.name}</td>
                                 <td>{game.minAge}</td>
                                 <td>{game.minPlayers} - {game.maxPlayers}</td>
