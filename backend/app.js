@@ -9,9 +9,9 @@ import gameDetails from "./routes/gameDetails.js";
 import search from "./routes/search.js";
 import login from "./routes/login.js";
 
-app.use("/gameDetails", gameDetails);
-app.use("/search", search);
-app.use("/login", login);
+app.use("/", gameDetails);
+app.use("/", search);
+app.use("/", login);
 
 app.listen(port, () => {
 	console.log(`Backend running on port: ${port}`);

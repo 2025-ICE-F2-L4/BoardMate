@@ -2,7 +2,7 @@ import db from "../db.js";
 import express from "express";
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/search", async (req, res) => {
 	const { phrase } = req.query;
 	console.log("Searching " + phrase);
 
