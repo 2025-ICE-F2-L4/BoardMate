@@ -39,7 +39,7 @@ const GameDetails = () => {
 
     return (
         <div className="game-details">
-            <Link to="/" className="back-button">Back to list</Link>
+            <Link to="/" className="back-button">Back to Home</Link>
             
             <h1>{game.name}</h1>
             
