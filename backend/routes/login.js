@@ -8,7 +8,7 @@ router.get("/login", async (req, res) => {
 
 	try {
 		const [results] = await db.query(
-			"SELECT age FROM users WHERE login = ? AND password = ?",
+			"SELECT id FROM users WHERE login = ? AND password = ?",
 			[user, password],
 		);
 		if (results.length != 1)
