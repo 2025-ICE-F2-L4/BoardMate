@@ -47,6 +47,7 @@ const GameDetails = () => {
 				<p><strong>Age:</strong> {game.minAge}+</p>
 				<p><strong>Players:</strong> {game.minPlayers} - {game.maxPlayers}</p>
 				<p><strong>Play Time:</strong> {game.playTime} minutes</p>
+				<p><strong>Description:</strong> {game.description} </p>
 			</div>
 		</div>
 	);

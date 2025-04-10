@@ -61,7 +61,7 @@ const BoardGamesList = () => {
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Min Age</th>
+                        <th>Age</th>
                         <th>Players</th>
                         <th>Play Time</th>
                     </tr>
@@ -73,7 +73,7 @@ const BoardGamesList = () => {
                                 onClick={() => handleGameClick(game.id)}
                                 className="clickable-row">
                                 <td>{game.name}</td>
-                                <td>{game.minAge}</td>
+                                <td>{game.minAge}+</td>
                                 <td>{game.minPlayers} - {game.maxPlayers}</td>
                                 <td>{game.playTime}</td>
                             </tr>
