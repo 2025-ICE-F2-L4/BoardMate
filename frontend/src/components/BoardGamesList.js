@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const BoardGamesList = () => {
+    const [inputValue, setInputValue] = useState("");
     const [searchTerm, setSearchTerm] = useState("");
     const [boardGames, setBoardGames] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
+        //console.log("Search term changed to:", searchTerm);
         const fetchGames = async () => {
             try {
                 let query = new URLSearchParams({ phrase: searchTerm }).toString();
@@ -21,6 +23,18 @@ const BoardGamesList = () => {
         fetchGames();
     }, [searchTerm]);
 
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            //console.log("Enter key pressed, setting searchTerm to:", inputValue);
+            setSearchTerm(inputValue);
+        }
+    }
+
+    const handleSearch = () => {
+        //console.log("Search button clicked, setting searchTerm to:", inputValue);
+        setSearchTerm(inputValue);
+    };
+
     const handleGameClick = (gameId) => {
         navigate(`/gameDetails?id=${gameId}`);
     };
@@ -30,13 +44,17 @@ const BoardGamesList = () => {
             <h2>Board Games</h2>
 
             {/* Search Input */}
+            <div className="search-container">
             <input
                 type="text"
                 placeholder="Search board games..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={handleKeyDown}
                 className="search-input"
             />
+            <button onClick={handleSearch} className="search-button">Search</button>
+            </div>
 
             {/* Table */}
             <table className="board-games-table">

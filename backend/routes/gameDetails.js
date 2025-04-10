@@ -8,7 +8,7 @@ router.get("/gameDetails", async (req, res) => {
 
 	try {
 		const [results] = await db.query(
-			"SELECT name, minAge, minPlayers, maxPlayers, playtime FROM games WHERE id = ?",
+			"SELECT name, minAge, minPlayers, maxPlayers, playTime FROM games WHERE id = ?",
 			[id],
 		);
 
