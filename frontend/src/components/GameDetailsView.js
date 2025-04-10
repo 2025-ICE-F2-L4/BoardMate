@@ -5,10 +5,6 @@ const GameDetails = () => {
 	const [game, setGame] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-	const { id } = useParams();
-	const [game, setGame] = useState(null);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
 	const [searchParams] = useSearchParams();
 	const id = searchParams.get('id');
 
