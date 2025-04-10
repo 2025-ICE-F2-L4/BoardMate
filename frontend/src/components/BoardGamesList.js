@@ -23,6 +23,7 @@ const BoardGamesList = () => {
 
     const handleGameClick = (gameId) => {
         navigate(`/gameDetails?id=${gameId}`);
+        console.log(gameId);
     };
 
     return (
