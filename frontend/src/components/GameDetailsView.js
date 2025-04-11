@@ -17,7 +17,7 @@ const GameDetails = () => {
 			}
 
 			try {
-				const response = await fetch(`http://localhost:3001/gameDetails?id=${id}`);
+				const response = await fetch(`https://boardmate.onrender.com/gameDetails?id=${id}`);
 				if (!response.ok) {
 					throw new Error('Game not found');
 				}
