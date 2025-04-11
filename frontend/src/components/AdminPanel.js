@@ -17,7 +17,7 @@ const AdminPanel = () => {
         setQueryResult(null);
 
         try {
-            const response = await fetch('http://localhost:3001/admin', {
+            const response = await fetch('https://boardmate.onrender.com/admin', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

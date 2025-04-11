@@ -12,7 +12,7 @@ const BoardGamesList = () => {
         const fetchGames = async () => {
             try {
                 let query = new URLSearchParams({ phrase: searchTerm }).toString();
-                let response = await fetch("http://localhost:3001/search?" + query);
+                let response = await fetch("https://boardmate.onrender.com/search?" + query);
                 let result = await response.json();
                 setBoardGames(result);
             } catch (error) {
