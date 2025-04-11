@@ -257,8 +257,8 @@
 .query-result-table tr:nth-child(even) {
   background-color: #f2f2f2;
 }
-
-/* .main-background {
+/*dodane*/
+.main-background {
   background-image: url("../public/img/background.png");
   background-size: cover;
   background-position: center;
@@ -317,4 +317,3 @@
   cursor: default;
 }
 
-*/
