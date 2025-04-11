@@ -257,3 +257,64 @@
 .query-result-table tr:nth-child(even) {
   background-color: #f2f2f2;
 }
+
+/* .main-background {
+  background-image: url("../public/img/background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: white;
+}
+
+.alt-background {
+  background-image: url("../public/img/profile_background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: white;
+} 
+
+.search-bar-wrapper {
+  width: 100%;
+  margin-top: 65px;
+  background-color: rgba(98, 88, 166, 0.3);
+  display: flex;
+  justify-content: center;
+  padding: 3px 0;
+}
+
+.dropdown-results {
+  background-color: rgba(98, 88, 166, 0.6);
+  backdrop-filter: blur(4px);
+  margin: 0 auto;
+  max-width: 600px;
+  width: 90%;
+  margin-top: 10px;
+  padding: 5px 0;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown-item {
+  padding: 12px 16px;
+  color: white;
+  text-align: left;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.dropdown-item:hover {
+  background-color: rgba(98, 88, 166, 0.85);
+}
+
+.no-results {
+  font-style: italic;
+  text-align: center;
+  color: #eee;
+  cursor: default;
+}
+
+*/
