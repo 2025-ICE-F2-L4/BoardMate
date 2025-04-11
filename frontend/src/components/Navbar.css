@@ -1,0 +1,41 @@
+.navbar {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.profile-button {
+    background-color: rgba(98, 88, 166, 0.6);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+    .profile-button:hover {
+        background-color: rgba(98, 88, 166, 0.9);
+    }
+
+.nav-button {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.2s;
+}
+
+    .nav-button:hover {
+        background-color: rgba(255, 255, 255, 0.25);
+    }
