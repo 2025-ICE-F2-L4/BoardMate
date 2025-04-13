@@ -7,7 +7,7 @@ router.get("/search", async (req, res) => {
 
 	try {
 		const [results] = await db.query(
-			"SELECT id, name, minAge, minPlayers, maxPlayers, playTime FROM games WHERE name LIKE ?",
+			"SELECT id, name FROM games WHERE name LIKE ?",
 			["%" + phrase + "%"],
 		);
 		res.json(results);

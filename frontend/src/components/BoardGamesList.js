@@ -7,7 +7,7 @@ const BoardGamesList = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [boardGames, setBoardGames] = useState([]);
     const navigate = useNavigate();
-    const [showTable, setShowTable] = useState(false);
+    const [showResults, setShowResults] = useState(false);
     const wrapperRef = useRef(null);
 
     useEffect(() => {
@@ -27,7 +27,7 @@ const BoardGamesList = () => {
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-                setShowTable(false);
+                setShowResults(false);
             }
         };
 
@@ -36,7 +36,6 @@ const BoardGamesList = () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
-
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
@@ -48,66 +47,45 @@ const BoardGamesList = () => {
         setSearchTerm(inputValue);
     };
 
-    const handleGameClick = (e, gameId) => {
-        e.stopPropagation();
+    const handleGameClick = (gameId) => {
         navigate(`/gameDetails?id=${gameId}`);
     };
-
 
     return (
         <div className="main-background">
             <div className="search-table-wrapper" ref={wrapperRef}>
-
                 <div className="search-bar-wrapper">
                     <div className="search-container">
-
                         <input
                             type="text"
                             placeholder="Search board games..."
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
                             onKeyDown={handleKeyDown}
-                            onFocus={() => setShowTable(true)}
+                            onFocus={() => setShowResults(true)}
                             className="search-input"
                         />
                         <button onClick={handleSearch} className="search-button">Search</button>
                     </div>
                 </div>
 
-
-                {showTable && (
-                    <div className="table-wrapper">
-                        <table className="board-games-table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Age</th>
-                                    <th>Players</th>
-                                    <th>Play Time</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {boardGames.length > 0 ? (
-                                    boardGames.map(game => (
-                                        <tr
-                                            key={game.id}
-                                            onClick={(e) => handleGameClick(e, game.id)}
-                                            className="clickable-row"
-                                        >
-
-                                            <td>{game.name}</td>
-                                            <td>{game.minAge}+</td>
-                                            <td>{game.minPlayers} - {game.maxPlayers}</td>
-                                            <td>{game.playTime}</td>
-                                        </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan="4" className="no-games">No games found</td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
+                {showResults && (
+                    <div className="dropdown-results">
+                        {boardGames.length > 0 ? (
+                            boardGames.map(game => (
+                                <div
+                                    key={game.id}
+                                    className="dropdown-item"
+                                    onClick={() => handleGameClick(game.id)}
+                                >
+                                    {game.name}
+                                </div>
+                            ))
+                        ) : (
+                            <div className="dropdown-item no-results">
+                                No games found
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
