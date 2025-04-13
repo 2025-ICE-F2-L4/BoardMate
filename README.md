@@ -33,7 +33,6 @@ BoardMate is a modern web application that allows users to browse, search and ex
 🎯 Personalized Board Game Recommendations  
 📝 Wishlist with ability to add/remove board games  
 🕹 Played Board Games History  
-👥 Friend system (to find people to play with)  
 💬 Game discussions and comment reporting  
 
 ---
