@@ -1,6 +1,6 @@
 # 🎲 BoardMate
 
-BoardMate is a modern web application that allows users to browse, search and explore board games. The app includes an admin panel, responsive design and is integrated with a PostgreSQL database.
+BoardMate is a modern web application that allows users to browse, search and explore board games. The app has a responsive design and is integrated with a MySQL database.
 
 ---
 
@@ -11,7 +11,6 @@ BoardMate is a modern web application that allows users to browse, search and ex
 ✅ Search games by name  
 ✅ View game recommendations  
 ✅ User login & registration system  
-✅ Admin panel for database queries  
 ✅ Responsive layout for desktop and mobile  
 
 ---
@@ -21,13 +20,12 @@ BoardMate is a modern web application that allows users to browse, search and ex
 🔹 **Frontend**: React.js 
 🔹 **Styling**: CSS3 
 🔹 **Backend**: Node.js + Express  
-🔹 **Database**: PostgreSQL  
+🔹 **Database**: MySQL  
 
 ---
 
 ## 🚀 Future Features (Planned)
 
-🔐 Authentication & Role Management (admin vs user)  
 🧑‍💼 User Profile (avatar, bio, wishlist, game history)
 📊 Ratings & Comments on board games  
 🎯 Personalized Board Game Recommendations  
@@ -63,7 +61,7 @@ npm install
 cd backend
 node server.js
 ```
-Backend runs at: http://localhost:5000
+Backend runs at: http://localhost:3001
 
 ## ▶️  Frontend
 
