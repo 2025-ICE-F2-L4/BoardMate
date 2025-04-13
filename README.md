@@ -17,16 +17,16 @@ BoardMate is a modern web application that allows users to browse, search and ex
 
 ## 🧠 Technologies
 
-🔹 **Frontend**: React.js 
-🔹 **Styling**: CSS3 
-🔹 **Backend**: Node.js + Express  
-🔹 **Database**: MySQL  
+🔹 **Frontend**: React.js <br />
+🔹 **Styling**: CSS3 <br />
+🔹 **Backend**: Node.js + Express  <br />
+🔹 **Database**: MySQL  <br />
 
 ---
 
 ## 🚀 Future Features (Planned)
 
-🧑‍💼 User Profile (avatar, bio, wishlist, game history)
+🧑‍💼 User Profile (avatar, bio, wishlist, game history)<br />
 📊 Ratings & Comments on board games  
 🎯 Personalized Board Game Recommendations  
 📝 Wishlist with ability to add/remove board games  
