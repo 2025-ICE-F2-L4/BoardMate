@@ -77,4 +77,4 @@ Frontend runs at: http://localhost:3000
 
 
 ## Deployed Application
-👉 Live Demo – boardmate.onrender.com
+👉 Live Demo – https://boardmate-duvz.onrender.com/
