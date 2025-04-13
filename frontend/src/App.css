@@ -120,15 +120,16 @@ html, body {
 }
 
 .back-button:hover {
-  background-color: #351f7a;
+    background-color: #351f7a;
 }
 
 .game-info {
-  text-align: left;
-  background-color: #9a93c4;
-  padding: 15px;
-  border-radius: 5px;
-  margin-top: 20px;
+    text-align: left;
+    background-color: #9a93c4;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+    line-height: 1.6;
 }
 
 .search-button {
