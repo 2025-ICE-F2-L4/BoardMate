@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import './App.css';
+import './styles/global.css';
 import BoardGamesList from './components/BoardGamesList';
 import GameDetails from './components/GameDetailsView';
 import AdminPanel from './components/AdminPanel';

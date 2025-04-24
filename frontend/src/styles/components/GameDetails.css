@@ -1,0 +1,41 @@
+.game-details {
+    background-color: #6258A6;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 80%;
+    max-width: 800px;
+    margin: 80px auto 20px auto;
+    color: white;
+}
+
+.game-info {
+    text-align: left;
+    background-color: #9a93c4;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+    line-height: 1.6;
+}
+
+@media (max-width: 480px) {
+    .game-details {
+        width: 85%;
+        margin: 70px auto 10px auto;
+        padding: 12px;
+    }
+    
+    .game-details h1 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .game-info {
+        padding: 10px;
+        font-size: 12px;
+    }
+    
+    .game-info p {
+        margin: 7px 0;
+    }
+}

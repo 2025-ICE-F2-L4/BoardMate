@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../styles/components/AdminPanel.css';
 
 const AdminPanel = () => {
     const [sqlQuery, setSqlQuery] = useState('');

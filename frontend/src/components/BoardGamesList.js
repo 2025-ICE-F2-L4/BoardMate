@@ -1,6 +1,6 @@
 ﻿import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../App.css';
+import '../styles/components/BoardGamesList.css';
 
 const BoardGamesList = () => {
     const [inputValue, setInputValue] = useState("");
