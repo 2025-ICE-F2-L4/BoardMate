@@ -1,0 +1,122 @@
+.admin-panel {
+    background-color: #6258A6;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 80%;
+    max-width: 1000px;
+    margin: 100px auto;
+    color: white;
+  }
+  
+  .admin-warning {
+    background-color: #ff9800;
+    color: #000;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .query-input-container, .query-result-container {
+    margin-bottom: 20px;
+  }
+  
+  .sql-input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-family: monospace;
+    margin-bottom: 10px;
+    background-color: #f8f8f8;
+    color: #333;
+  }
+  
+  .execute-query-button {
+    background-color: #432E8C;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .execute-query-button:hover {
+    background-color: #351f7a;
+  }
+  
+  .execute-query-button:disabled {
+    background-color: #9a93c4;
+    cursor: not-allowed;
+  }
+  
+  .query-result-container {
+    background-color: #9a93c4;
+    padding: 15px;
+    border-radius: 5px;
+    min-height: 100px;
+    text-align: left;
+    overflow-x: auto;
+  }
+  
+  .error-message {
+    color: #ff3333;
+    background-color: #ffe6e6;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .query-result-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background-color: white;
+    color: black;
+  }
+  
+  .query-result-table th, 
+  .query-result-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    overflow-wrap: break-word;
+  }
+  
+  .query-result-table th {
+    background-color: #432E8C;
+    color: white;
+  }
+  
+  .query-result-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  @media (max-width: 480px) {
+      .admin-panel {
+          width: 80%;
+          padding: 20px;
+          font-size: 10px;
+          margin-top: 60px;
+      }
+  
+      .admin-warning {
+          font-size: 10px;
+          padding: 8px;
+      }
+  
+      .sql-input {
+          font-size: 10px;
+          padding: 6px;
+      }
+  
+      .execute-query-button {
+          padding: 6px 12px;
+          font-size: 10px;
+      }
+  }

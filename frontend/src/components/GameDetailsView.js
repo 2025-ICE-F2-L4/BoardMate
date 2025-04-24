@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import '../styles/components/GameDetails.css';
+import '../styles/components/common.css';
 
 const GameDetails = () => {
 	const [game, setGame] = useState(null);

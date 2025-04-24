@@ -1,0 +1,47 @@
+.search-button {
+    background-color: #9a93c4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .search-button:hover {
+    background-color: #76709c;
+  }
+  
+  .nav-links {
+    font-size: 1rem;
+    margin-top: 10px;
+  }
+  
+  .nav-link {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #6258A6;
+    -webkit-text-stroke: 0;
+  }
+  
+  .nav-link:hover {
+    background-color: #76709c;
+  }
+  
+  .back-button {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 8px 16px;
+    background-color: #432E8C;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+  .back-button:hover {
+    background-color: #351f7a;
+  }
