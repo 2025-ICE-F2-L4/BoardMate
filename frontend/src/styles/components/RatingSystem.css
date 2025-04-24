@@ -36,6 +36,30 @@
   font-size: 14px;
 }
 
+.star-container {
+  position: relative;
+  display: inline-block;
+  margin: 0 2px;
+}
+
+.star-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.user-stars {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.user-stars svg {
+  margin-right: 2px;
+}
+
 .star-filled {
   color: #FFD700;
 }

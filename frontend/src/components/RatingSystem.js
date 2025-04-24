@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaStar } from 'react-icons/fa';
+import { FaStarHalfAlt } from 'react-icons/fa';
+import { FaRegStar } from 'react-icons/fa';
 import '../styles/components/RatingSystem.css';
 
 const RatingSystem = ({ gameId }) => {
@@ -65,7 +67,6 @@ const RatingSystem = ({ gameId }) => {
                 }),
             });
             
-            // Add this to see the full error response
             const responseData = await response.clone().json().catch(() => ({}));
             console.log("Rating response:", response.status, responseData);
             
@@ -120,12 +121,21 @@ const RatingSystem = ({ gameId }) => {
                     <div className="stars-display">
                         {[...Array(5)].map((_, index) => {
                             const starValue = index + 1;
+                            const fillPercent = Math.min(
+                                Math.max(numericAverage - index, 0), 
+                                1
+                            );
+                            
                             return (
-                                <FaStar
-                                    key={index}
-                                    size={20}
-                                    className={starValue <= Math.round(numericAverage) ? "star-filled" : "star-empty"}
-                                />
+                                <div key={index} className="star-container">
+                                    <FaRegStar size={20} className="star-empty" />
+                                    <div 
+                                        className="star-fill" 
+                                        style={{ width: `${fillPercent * 100}%` }}
+                                    >
+                                        <FaStar size={20} className="star-filled" />
+                                    </div>
+                                </div>
                             );
                         })}
                     </div>
