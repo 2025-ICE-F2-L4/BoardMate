@@ -4,7 +4,6 @@ const router = express.Router();
 
 router.get("/login", async (req, res) => {
 	const { user, password } = req.query;
-	console.log("Logging in " + user);
 
 	try {
 		const [results] = await db.query(
