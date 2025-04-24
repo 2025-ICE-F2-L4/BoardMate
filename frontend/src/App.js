@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import './styles/global.css';
 import BoardGamesList from './components/BoardGamesList';
@@ -10,10 +10,16 @@ import Navbar from './components/Navbar';
 function AppWrapper() {
     const location = useLocation();
     const isAlt = location.pathname === "/login" || location.pathname === "/profile";
+    
+    const [, forceUpdate] = React.useState({});
+    
+    useEffect(() => {
+        forceUpdate({});
+    }, [location.pathname]);
 
     return (
         <div className={`App ${isAlt ? "alt-background" : "main-background"}`}>
-            <Navbar />
+            <Navbar key={localStorage.getItem('userId') || 'guest'} />
             <Routes>
                 <Route path="/" element={<BoardGamesList />} />
                 <Route path="/gameDetails" element={<GameDetails />} />

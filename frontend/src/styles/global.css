@@ -32,7 +32,7 @@ html, body {
 }
 
 .alt-background {
-  background-image: url("../../public/img/profile_background.png");
+  background-image: url("../img/profile_background.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
