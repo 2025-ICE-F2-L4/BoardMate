@@ -10,7 +10,6 @@
   color: white;
 }
 
-/* Average rating display */
 .average-rating {
   display: flex;
   align-items: center;
@@ -89,8 +88,8 @@ textarea {
 }
 
 .success-message {
-  color: #4CAF50;
-  background-color: rgba(76, 175, 80, 0.1);
+  color: black;
+  background-color: rgba(80, 80, 80, 0.1);
   padding: 10px;
   border-radius: 5px;
   margin-top: 15px;
