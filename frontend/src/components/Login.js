@@ -20,7 +20,7 @@ const Login = () => {
                 password: password
             }).toString();
 
-            const response = await fetch(`https://boardmate.onrender.com/login?${queryParams}`);
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/login?${queryParams}`);
             const data = await response.json();
 
             if (!response.ok) {
