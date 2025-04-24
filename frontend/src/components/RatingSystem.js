@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { FaStar } from 'react-icons/fa';
-import { FaStarHalfAlt } from 'react-icons/fa';
 import { FaRegStar } from 'react-icons/fa';
 import '../styles/components/RatingSystem.css';
 
@@ -124,7 +123,6 @@ const RatingSystem = ({ gameId }) => {
                 {ratings.length > 0 && (
                     <div className="stars-display">
                         {[...Array(5)].map((_, index) => {
-                            const starValue = index + 1;
                             const fillPercent = Math.min(
                                 Math.max(numericAverage - index, 0), 
                                 1
