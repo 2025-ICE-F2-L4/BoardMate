@@ -1,0 +1,174 @@
+.rating-system {
+  background-color: #9a93c4;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 30px;
+}
+
+.rating-system h2 {
+  margin-bottom: 15px;
+  color: white;
+}
+
+/* Average rating display */
+.average-rating {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #6258A6;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.rating-score {
+  font-size: 24px;
+  font-weight: bold;
+  margin-right: 10px;
+  color: white;
+}
+
+.stars-display {
+  display: flex;
+  margin-right: 10px;
+}
+
+.rating-count {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+}
+
+.star-filled {
+  color: #FFD700;
+}
+
+.star-empty {
+  color: #e4e5e9;
+}
+
+.star-rating {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.star-rating input[type="radio"] {
+  display: none;
+}
+
+.star-rating label {
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.comment-input {
+  margin-bottom: 15px;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical;
+  font-family: inherit;
+  background-color: #f9f9f9;
+}
+
+.submit-rating {
+  background-color: #432E8C;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.submit-rating:hover {
+  background-color: #351f7a;
+}
+
+.success-message {
+  color: #4CAF50;
+  background-color: rgba(76, 175, 80, 0.1);
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.error-message {
+  color: #f44336;
+  background-color: rgba(244, 67, 54, 0.1);
+  padding: 10px;
+  border-radius: 5px;
+  margin: 15px 0;
+}
+
+.login-prompt {
+  text-align: center;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.login-prompt a {
+  color: blue;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-prompt a:hover {
+  text-decoration: underline;
+}
+
+.ratings-list h3 {
+  margin-top: 20px;
+  margin-bottom: 15px;
+  color: white;
+}
+
+.rating-item {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.rating-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.username {
+  font-weight: bold;
+  color: #432E8C;
+}
+
+.rating-date {
+  color: #666;
+  font-size: 12px;
+}
+
+.rating-comment {
+  color: #333;
+  line-height: 1.5;
+}
+
+.add-rating h3 {
+  margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+  .rating-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .user-stars {
+    margin: 5px 0;
+  }
+}
