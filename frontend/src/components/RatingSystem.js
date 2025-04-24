@@ -22,7 +22,7 @@ const RatingSystem = ({ gameId }) => {
                 if (!response.ok) {
                     throw new Error('Failed to load ratings');
                 }
-                
+
                 const data = await response.json();
                 setRatings(data);
             } catch (err) {
@@ -32,22 +32,22 @@ const RatingSystem = ({ gameId }) => {
                 setIsLoading(false);
             }
         };
-        
+
         fetchRatings();
     }, [gameId]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         if (userRating === 0) {
             alert('Please select a star rating');
             return;
         }
-        
+
         console.log("Submitting review with data:", {
             backend: process.env.REACT_APP_BACKEND_URL,
             userID: parseInt(userId, 10),
-            gameID: parseInt(gameId, 10), 
+            gameID: parseInt(gameId, 10),
             rating: userRating,
             comment: comment || ""
         });
@@ -65,26 +65,26 @@ const RatingSystem = ({ gameId }) => {
                     comment: comment
                 }),
             });
-            
+
             const responseData = await response.clone().json().catch(() => ({}));
             console.log("Rating response:", response.status, responseData);
-            
+
             if (!response.ok) {
                 throw new Error('Failed to submit rating');
             }
-            
+
             setUserRating(0);
             setComment('');
             setSubmitSuccess(true);
-            
+
             const ratingsResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/rate?gameID=${gameId}`);
             const ratingsData = await ratingsResponse.json();
             setRatings(ratingsData);
-            
+
             setTimeout(() => {
                 setSubmitSuccess(false);
             }, 3000);
-            
+
         } catch (err) {
             setError(err.message);
             console.error('Error submitting rating:', err);
@@ -95,44 +95,44 @@ const RatingSystem = ({ gameId }) => {
     let validRatings = 0;
 
     if (ratings.length > 0) {
-      ratings.forEach(item => {
-        const parsed = parseInt(item.rating, 10);
-        if (!isNaN(parsed) && parsed > 0 && parsed <= 5) {
-          totalRating += parsed;
-          validRatings++;
-        }
-      });
+        ratings.forEach(item => {
+            const parsed = parseInt(item.rating, 10);
+            if (!isNaN(parsed) && parsed > 0 && parsed <= 5) {
+                totalRating += parsed;
+                validRatings++;
+            }
+        });
     }
 
     const averageRating = validRatings > 0
-      ? (totalRating / validRatings).toFixed(1)
-      : 'No ratings yet';
+        ? (totalRating / validRatings).toFixed(1)
+        : 'No ratings yet';
 
     const numericAverage = validRatings > 0 ? totalRating / validRatings : 0;
 
-    const sortedRatings = [...ratings].sort((a, b) => 
+    const sortedRatings = [...ratings].sort((a, b) =>
         new Date(b.timestamp) - new Date(a.timestamp)
     );
 
     return (
         <div className="rating-system">
             <h2>Game Reviews</h2>
-            
+
             <div className="average-rating">
                 <span className="rating-score">{averageRating}</span>
                 {ratings.length > 0 && (
                     <div className="stars-display">
                         {[...Array(5)].map((_, index) => {
                             const fillPercent = Math.min(
-                                Math.max(numericAverage - index, 0), 
+                                Math.max(numericAverage - index, 0),
                                 1
                             );
-                            
+
                             return (
                                 <div key={index} className="star-container">
                                     <FaRegStar size={20} className="star-empty" />
-                                    <div 
-                                        className="star-fill" 
+                                    <div
+                                        className="star-fill"
                                         style={{ width: `${fillPercent * 100}%` }}
                                     >
                                         <FaStar size={20} className="star-filled" />
@@ -170,7 +170,7 @@ const RatingSystem = ({ gameId }) => {
                                 );
                             })}
                         </div>
-                        
+
                         <div className="comment-input">
                             <textarea
                                 placeholder="Write your review (optional)"
@@ -179,11 +179,11 @@ const RatingSystem = ({ gameId }) => {
                                 rows={4}
                             />
                         </div>
-                        
+
                         <button type="submit" className="submit-rating">
                             Submit Review
                         </button>
-                        
+
                         {submitSuccess && (
                             <div className="success-message">
                                 Your review has been submitted successfully!
@@ -196,10 +196,10 @@ const RatingSystem = ({ gameId }) => {
                     <p>Please <a href="/login">log in</a> to leave a review</p>
                 </div>
             )}
-            
+
             <div className="ratings-list">
                 <h3>User Reviews</h3>
-                
+
                 {isLoading ? (
                     <p>Loading reviews...</p>
                 ) : error ? (

@@ -8,7 +8,10 @@ router.get("/gameDetails", async (req, res) => {
 
 	try {
 		const [results] = await db.query(
-			"SELECT name, minAge, minPlayers, maxPlayers, playTime, description FROM games WHERE id = ?",
+			"SELECT name, minAge, minPlayers, maxPlayers, playTime, AVG(ratings.rating) as averageRating, description\
+            FROM games LEFT JOIN ratings ON ratings.game_id = games.id\
+            WHERE games.id = ?\
+            GROUP BY games.id, name,minAge,minPlayers,maxPlayers,playTime,description",
 			[id],
 		);
 
