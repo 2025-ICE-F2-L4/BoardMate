@@ -111,6 +111,10 @@ const RatingSystem = ({ gameId }) => {
 
     const numericAverage = validRatings > 0 ? totalRating / validRatings : 0;
 
+    const sortedRatings = [...ratings].sort((a, b) => 
+        new Date(b.timestamp) - new Date(a.timestamp)
+    );
+
     return (
         <div className="rating-system">
             <h2>Game Reviews</h2>
@@ -205,7 +209,7 @@ const RatingSystem = ({ gameId }) => {
                 ) : ratings.length === 0 ? (
                     <p>No reviews yet. Be the first to review!</p>
                 ) : (
-                    ratings.map((item, index) => (
+                    sortedRatings.map((item, index) => (
                         <div key={index} className="rating-item">
                             <div className="rating-header">
                                 <span className="username">{item.login}</span>
