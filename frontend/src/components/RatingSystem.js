@@ -5,6 +5,7 @@ import '../styles/components/RatingSystem.css';
 
 const RatingSystem = ({ gameId }) => {
     const [ratings, setRatings] = useState([]);
+    const [gameDetails, setGameDetails] = useState(null);
     const [userRating, setUserRating] = useState(0);
     const [hover, setHover] = useState(0);
     const [comment, setComment] = useState('');
@@ -16,24 +17,31 @@ const RatingSystem = ({ gameId }) => {
     const isLoggedIn = !!userId;
 
     useEffect(() => {
-        const fetchRatings = async () => {
+        const fetchData = async () => {
             try {
-                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/rate?gameID=${gameId}`);
-                if (!response.ok) {
+                const detailsResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/gameDetails?id=${gameId}`);
+                if (!detailsResponse.ok) {
+                    throw new Error('Failed to load game details');
+                }
+                const detailsData = await detailsResponse.json();
+
+                setGameDetails(detailsData);
+
+                const ratingsResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/rate?gameID=${gameId}`);
+                if (!ratingsResponse.ok) {
                     throw new Error('Failed to load ratings');
                 }
-
-                const data = await response.json();
-                setRatings(data);
+                const ratingsData = await ratingsResponse.json();
+                setRatings(ratingsData);
             } catch (err) {
                 setError(err.message);
-                console.error('Error fetching ratings:', err);
+                console.error('Error fetching data:', err);
             } finally {
                 setIsLoading(false);
             }
         };
 
-        fetchRatings();
+        fetchData();
     }, [gameId]);
 
     const handleSubmit = async (e) => {
@@ -43,14 +51,6 @@ const RatingSystem = ({ gameId }) => {
             alert('Please select a star rating');
             return;
         }
-
-        console.log("Submitting review with data:", {
-            backend: process.env.REACT_APP_BACKEND_URL,
-            userID: parseInt(userId, 10),
-            gameID: parseInt(gameId, 10),
-            rating: userRating,
-            comment: comment || ""
-        });
 
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/rate`, {
@@ -77,9 +77,16 @@ const RatingSystem = ({ gameId }) => {
             setComment('');
             setSubmitSuccess(true);
 
-            const ratingsResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/rate?gameID=${gameId}`);
-            const ratingsData = await ratingsResponse.json();
-            setRatings(ratingsData);
+            const [newDetailsResponse, newRatingsResponse] = await Promise.all([
+                fetch(`${process.env.REACT_APP_BACKEND_URL}/gameDetails?id=${gameId}`),
+                fetch(`${process.env.REACT_APP_BACKEND_URL}/rate?gameID=${gameId}`)
+            ]);
+            
+            const newDetailsData = await newDetailsResponse.json();
+            const newRatingsData = await newRatingsResponse.json();
+            
+            setGameDetails(newDetailsData);
+            setRatings(newRatingsData);
 
             setTimeout(() => {
                 setSubmitSuccess(false);
@@ -91,24 +98,13 @@ const RatingSystem = ({ gameId }) => {
         }
     };
 
-    let totalRating = 0;
-    let validRatings = 0;
-
-    if (ratings.length > 0) {
-        ratings.forEach(item => {
-            const parsed = parseInt(item.rating, 10);
-            if (!isNaN(parsed) && parsed > 0 && parsed <= 5) {
-                totalRating += parsed;
-                validRatings++;
-            }
-        });
-    }
-
-    const averageRating = validRatings > 0
-        ? (totalRating / validRatings).toFixed(1)
+    const averageRating = gameDetails?.averageRating 
+        ? parseFloat(gameDetails.averageRating).toFixed(1)
         : 'No ratings yet';
 
-    const numericAverage = validRatings > 0 ? totalRating / validRatings : 0;
+    const numericAverage = gameDetails?.averageRating 
+        ? parseFloat(gameDetails.averageRating) 
+        : 0;
 
     const sortedRatings = [...ratings].sort((a, b) =>
         new Date(b.timestamp) - new Date(a.timestamp)
@@ -120,7 +116,7 @@ const RatingSystem = ({ gameId }) => {
 
             <div className="average-rating">
                 <span className="rating-score">{averageRating}</span>
-                {ratings.length > 0 && (
+                {numericAverage > 0 && (
                     <div className="stars-display">
                         {[...Array(5)].map((_, index) => {
                             const fillPercent = Math.min(
