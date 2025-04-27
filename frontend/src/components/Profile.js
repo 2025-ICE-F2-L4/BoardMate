@@ -5,16 +5,21 @@ function Profile() {
     const [bio, setBio] = useState("");
     const [editingBio, setEditingBio] = useState(false);
     const [profilePicture, setProfilePicture] = useState(null);
+    const [username, setUsername] = useState("");
 
     useEffect(() => {
         const savedBio = localStorage.getItem('bio');
         const savedProfilePicture = localStorage.getItem('profilePicture');
+        const savedUsername = localStorage.getItem('login');
 
         if (savedBio) {
             setBio(savedBio);
         }
         if (savedProfilePicture) {
             setProfilePicture(savedProfilePicture);
+        }
+        if (savedUsername) {
+            setUsername(savedUsername);
         }
     }, []);
 
@@ -44,6 +49,7 @@ function Profile() {
         <div className="profile-page">
             <div className="profile-header">
                 <div className="profile-left">
+                    <h1 className="username">{username || "Guest"}</h1>
                     <img
                         src={profilePicture || require("../img/default-avatar.jpg")}
                         alt="Profile"

@@ -28,6 +28,7 @@ const Login = () => {
             }
 
             localStorage.setItem('userId', data.id);
+            localStorage.setItem('login', username);
             
             navigate('/');
         } catch (err) {
