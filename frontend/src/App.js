@@ -6,6 +6,7 @@ import GameDetails from './components/GameDetailsView';
 import AdminPanel from './components/AdminPanel';
 import Login from './components/Login';
 import Navbar from './components/Navbar';
+import Profile from './components/Profile';
 
 function AppWrapper() {
     const location = useLocation();
@@ -25,6 +26,7 @@ function AppWrapper() {
                 <Route path="/gameDetails" element={<GameDetails />} />
                 <Route path="/admin" element={<AdminPanel />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/profile" element={<Profile />} />
             </Routes>
         </div>
     );

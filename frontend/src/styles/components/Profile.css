@@ -1,0 +1,63 @@
+.profile-page {
+    margin-top: 80px;
+    padding: 20px;
+    min-height: 80vh;
+    background-color: rgba(29, 26, 52, 0.8);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-header {
+    display: flex;
+    gap: 50px;
+    align-items: flex-start;
+}
+
+.profile-left {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 50px;
+    border-radius: 15px;
+    width: 300px;
+    text-align: center;
+}
+
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 25px;
+}
+
+.upload-button {
+    margin-bottom: 20px;
+}
+
+.bio-text {
+    margin-top: 10px;
+}
+
+.edit-bio-button, .save-bio-button {
+    margin-top: 20px;
+    background-color: #9b59b6;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 15px;
+    color: white;
+    cursor: pointer;
+}
+
+.profile-right {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 220px;
+    border-radius: 15px;
+}
+
+.wishlist {
+    margin-top: 30px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+}

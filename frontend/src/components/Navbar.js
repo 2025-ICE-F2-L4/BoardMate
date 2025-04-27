@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/components/Navbar.css';
 import boardmateLogo from '../img/boardmate.png';
+import { Link } from 'react-router-dom';
+
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -32,14 +34,15 @@ const Navbar = () => {
                 <button className="nav-button" onClick={() => handleNavigate('/admin')}>Admin</button>
 
                 {isLoggedIn ? (
-                    <button className="nav-button logout-button" onClick={handleLogout}>
-                        Logout
-                    </button>
+                    <>
+                        <Link to="/profile" className="nav-button">Profile</Link>
+                        <button onClick={handleLogout} className="nav-button">Logout</button>
+                    </>
                 ) : (
-                    <button className="nav-button" onClick={() => handleNavigate('/login')}>
-                        Login
-                    </button>
+                    <Link to="/login" className="nav-button">Login</Link>
                 )}
+
+
             </div>
         </div>
     );
