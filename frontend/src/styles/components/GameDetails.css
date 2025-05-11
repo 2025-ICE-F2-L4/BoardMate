@@ -18,6 +18,41 @@
     line-height: 1.6;
 }
 
+.genres-container {
+    margin-bottom: 16px;
+}
+
+.genre-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.genre-tag {
+    background-color: #6258A6;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 16px;
+    font-size: 14px;
+    display: inline-block;
+}
+
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    font-size: 18px;
+}
+
+.error-message, .not-found {
+    padding: 20px;
+    background-color: #ffeeee;
+    border-left: 4px solid #ff6666;
+    margin: 20px 0;
+}
+
 @media (max-width: 480px) {
     .game-details {
         width: 85%;

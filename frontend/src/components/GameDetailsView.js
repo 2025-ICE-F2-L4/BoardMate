@@ -24,7 +24,10 @@ const GameDetails = () => {
                 if (!response.ok) {
                     throw new Error('Game not found');
                 }
+                
                 const data = await response.json();
+                console.log("Game details with genres:", data);
+                
                 setGame(data);
                 setLoading(false);
             } catch (err) {
@@ -36,9 +39,9 @@ const GameDetails = () => {
         fetchGameDetails();
     }, [id]);
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
-    if (!game) return <div>Game not found</div>;
+    if (loading) return <div className="loading-spinner">Loading...</div>;
+    if (error) return <div className="error-message">Error: {error}</div>;
+    if (!game) return <div className="not-found">Game not found</div>;
 
     return (
         <div className="game-details">
@@ -47,6 +50,17 @@ const GameDetails = () => {
             <h1>{game.name}</h1>
             
             <div className="game-info">
+                {game.genres && game.genres.length > 0 && (
+                    <div className="genres-container">
+                        <p><strong>Genres:</strong></p>
+                        <div className="genre-tags">
+                            {game.genres.map((genre, index) => (
+                                <span key={index} className="genre-tag">{genre}</span>
+                            ))}
+                        </div>
+                    </div>
+                )}
+                
                 <p><strong>Age:</strong> {game.minAge}+</p>
                 <p><strong>Players:</strong> {game.minPlayers} - {game.maxPlayers}</p>
                 <p><strong>Play Time:</strong> {game.playTime} minutes</p>

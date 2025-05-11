@@ -56,11 +56,12 @@
 
 .search-input {
     width: 100%;
-    padding: 10px 90px 10px 10px;
+    padding: 10px;
     border: 1px solid #6258A6;
     border-radius: 5px;
     font-size: 16px;
     box-sizing: border-box;
+    padding-right: 230px;
 }
 
 .search-input:focus {
@@ -130,12 +131,68 @@
     z-index: 20;
 }
 
-.search-button {
+.search-controls {
     position: absolute;
     top: 50%;
     right: 10px;
     transform: translateY(-50%);
     z-index: 21;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.search-button {
+    background-color: #432E8C;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.search-button:hover {
+    background-color: #342371;
+}
+
+.genre-filter {
+    display: none;
+}
+
+.genre-select {
+    width: 150px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #6258A6;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #432E8C;
+    font-size: 14px;
+    cursor: pointer;
+    height: 100%;
+}
+
+.genre-select:focus {
+    outline: none;
+    border-color: #0056b3;
+    box-shadow: 0px 0px 5px rgba(0, 91, 187, 0.5);
+}
+
+@media (max-width: 600px) {
+    .search-input {
+        padding-right: 170px;
+    }
+    
+    .genre-select {
+        width: 100px;
+        font-size: 12px;
+        padding: 6px 8px;
+    }
+    
+    .search-button {
+        font-size: 12px;
+        padding: 6px 8px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -149,13 +206,14 @@
     }
 
     .search-input {
-        font-size: 8px;
+        padding-right: 120px;
+        font-size: 12px;
         padding: 5px 40px 3px 3px;
     }
 
     .search-button {
-        padding: 3px 6px;
-        font-size: 8px;
+        font-size: 10px;
+        padding: 4px 6px;
     }
 
     .board-games-table {
@@ -166,5 +224,11 @@
     .board-games-table th,
     .board-games-table td {
         padding: 6px;
+    }
+    
+    .genre-select {
+        width: 70px;
+        font-size: 10px;
+        padding: 4px 6px;
     }
 }
