@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import '../styles/components/GameDetails.css';
 import '../styles/components/common.css';
@@ -10,8 +10,13 @@ const GameDetails = () => {
     const [error, setError] = useState(null);
     const [searchParams] = useSearchParams();
     const id = searchParams.get('id');
+    const userId = localStorage.getItem('userId');
+    const isLoggedIn = !!userId;
+    const historyRecorded = useRef(false);
 
     useEffect(() => {
+        historyRecorded.current = false;
+        
         const fetchGameDetails = async () => {
             if (!id) {
                 setError("No game ID provided");
@@ -26,9 +31,15 @@ const GameDetails = () => {
                 }
                 
                 const data = await response.json();
-                console.log("Game details with genres:", data);
+                console.log("Game details:", data);
                 
                 setGame(data);
+                
+                if (isLoggedIn && !historyRecorded.current) {
+                    recordGameView(id);
+                    historyRecorded.current = true;
+                }
+                
                 setLoading(false);
             } catch (err) {
                 setError(err.message);
@@ -37,7 +48,41 @@ const GameDetails = () => {
         };
 
         fetchGameDetails();
-    }, [id]);
+    }, [id, isLoggedIn]);
+
+    const recordGameView = async (gameId) => {
+        try {
+            const payload = {
+                userID: parseInt(userId, 10),
+                gameID: parseInt(gameId, 10)
+            };
+            
+            console.log('Recording game history with payload:', payload);
+            console.log('Backend URL:', process.env.REACT_APP_BACKEND_URL);
+            
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/gameHistory`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            });
+            
+            const responseText = await response.text();
+            
+            if (!response.ok) {
+                console.error('Failed to record game history:', {
+                    status: response.status,
+                    statusText: response.statusText,
+                    responseBody: responseText
+                });
+            } else {
+                console.log('Game view recorded in history successfully:', responseText);
+            }
+        } catch (err) {
+            console.error('Error recording game history:', err.message);
+        }
+    };
 
     if (loading) return <div className="loading-spinner">Loading...</div>;
     if (error) return <div className="error-message">Error: {error}</div>;
