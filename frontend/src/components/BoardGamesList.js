@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/components/BoardGamesList.css';
+import Recommendations from './Recommendations';
 
 const BoardGamesList = () => {
     const [inputValue, setInputValue] = useState("");
@@ -166,6 +167,7 @@ const BoardGamesList = () => {
                     </div>
                 )}
             </div>
+            <Recommendations />
         </div>
     );
 };
