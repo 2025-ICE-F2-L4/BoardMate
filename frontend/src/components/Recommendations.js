@@ -19,7 +19,6 @@ const Recommendations = () => {
             }
             
             try {
-                // Fetch recommendation IDs using your existing endpoint
                 const recommendResponse = await fetch(
                     `${process.env.REACT_APP_BACKEND_URL}/recommendations?count=4`
                 );
@@ -36,7 +35,6 @@ const Recommendations = () => {
                     return;
                 }
                 
-                // Fetch details for each recommended game
                 const gameDetailsPromises = recommendData.map(item =>
                     fetch(`${process.env.REACT_APP_BACKEND_URL}/gameDetails?id=${item.game_id}`)
                         .then(res => {
