@@ -12,6 +12,7 @@ import admin from "./routes/admin.js";
 import rate from "./routes/rate.js";
 import gameHistory from "./routes/gameHistory.js";
 import images from "./routes/images.js";
+import genres from "./routes/genres.js";
 
 app.use("/", gameDetails);
 app.use("/", search);
@@ -20,6 +21,8 @@ app.use("/", admin);
 app.use("/", rate);
 app.use("/", gameHistory);
 app.use("/", images);
+app.use("/", genres);
+
 
 app.listen(port, () => {
 	console.log(`Backend running on port: ${port}`);
