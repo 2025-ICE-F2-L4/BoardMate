@@ -47,4 +47,25 @@ router.get("/profilePicture", async (req, res) => {
 		return res.status(500).json({ error: err.message });
 	}
 });
+
+router.get("/recommendations", async (req, res) => {
+	const { count } = req.query;
+	try {
+		const [results] = await db.query(
+			"SELECT game_id\
+            FROM (\
+                SELECT game_id, COUNT(game_id) AS count\
+                FROM game_history\
+                GROUP BY game_id\
+            ) AS sub\
+            ORDER BY count ASC\
+            LIMIT ?",
+			[parseInt(count, 10)],
+		);
+		return res.json(results);
+	} catch (err) {
+		return res.status(500).json({ error: err.message });
+	}
+});
+
 export default router;
