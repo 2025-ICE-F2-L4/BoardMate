@@ -12,7 +12,7 @@ import admin from "./routes/admin.js";
 import rate from "./routes/rate.js";
 import gameHistory from "./routes/gameHistory.js";
 import images from "./routes/images.js";
-import genres from "./routes/genres.js";
+import genres from "./routes/genre.js";
 
 app.use("/", gameDetails);
 app.use("/", search);
