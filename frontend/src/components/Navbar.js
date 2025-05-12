@@ -31,7 +31,9 @@ const Navbar = () => {
             </div>
             <div className="nav-buttons-container">
                 <button className="nav-button" onClick={() => handleNavigate('/')}>Home</button>
+                <button className="nav-button" onClick={() => handleNavigate('/search')}>Search</button>
                 <button className="nav-button" onClick={() => handleNavigate('/admin')}>Admin</button>
+
 
                 {isLoggedIn ? (
                     <>

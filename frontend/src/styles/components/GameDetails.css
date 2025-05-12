@@ -74,3 +74,35 @@
         margin: 7px 0;
     }
 }
+
+.game-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.action-button {
+    background-color: #9C3FE4;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.action-button:hover {
+    background-color: #8436c2;
+
+}
+
+.action-button.remove {
+    background-color: #e74c3c;
+
+}
+
+.action-button.remove:hover {
+    background-color: #c0392b;
+
+}
+

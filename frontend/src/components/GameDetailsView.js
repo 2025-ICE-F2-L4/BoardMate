@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import '../styles/components/GameDetails.css';
 import '../styles/components/common.css';
@@ -10,9 +10,13 @@ const GameDetails = () => {
     const [error, setError] = useState(null);
     const [searchParams] = useSearchParams();
     const id = searchParams.get('id');
+    const name = searchParams.get("name");
     const userId = localStorage.getItem('userId');
     const isLoggedIn = !!userId;
     const historyRecorded = useRef(false);
+    const [isInWishlist, setIsInWishlist] = useState(false);
+    const [isInHistory, setIsInHistory] = useState(false);
+
 
     useEffect(() => {
         historyRecorded.current = false;
@@ -34,6 +38,14 @@ const GameDetails = () => {
                 console.log("Game details:", data);
                 
                 setGame(data);
+
+                if (userId && data?.id) {
+                    const wishlist = JSON.parse(localStorage.getItem(`wishlist_${userId}`)) || [];
+                    const history = JSON.parse(localStorage.getItem(`history_${userId}`)) || [];
+
+                    setIsInWishlist(wishlist.some(g => g.id === data.id));
+                    setIsInHistory(history.some(g => g.id === data.id));
+                }
                 
                 if (isLoggedIn && !historyRecorded.current) {
                     recordGameView(id);
@@ -45,6 +57,7 @@ const GameDetails = () => {
                 setError(err.message);
                 setLoading(false);
             }
+
         };
 
         fetchGameDetails();
@@ -84,13 +97,63 @@ const GameDetails = () => {
         }
     };
 
+    const addToWishlist = async (gameId) => {
+        const userId = localStorage.getItem('userId');
+        if (!userId) {
+            alert("You must be logged in.");
+            return;
+        }
+        const key = `wishlist_${userId}`;
+        const current = JSON.parse(localStorage.getItem(key)) || [];
+        const updated = [...current, { id: parseInt(game.id), name: game.name }];
+        localStorage.setItem(key, JSON.stringify(updated));
+        setIsInWishlist(true);
+
+    };
+
+    const addToHistory = async (gameId) => {
+        if (!userId) {
+            alert("You must be logged in.");
+            return;
+        }
+        const key = `history_${userId}`;
+        const current = JSON.parse(localStorage.getItem(key)) || [];
+        const updated = [...current, { id: parseInt(game.id), name: game.name }];
+        localStorage.setItem(key, JSON.stringify(updated));
+        setIsInHistory(true);
+
+    };
+
+    const removeFromWishlist = () => {
+        const userId = localStorage.getItem('userId');
+        const key = `wishlist_${userId}`;
+        const current = JSON.parse(localStorage.getItem(key)) || [];
+        const updated = current.filter(g => g.id !== game.id);
+        localStorage.setItem(key, JSON.stringify(updated));
+        setIsInWishlist(false);
+    };
+
+    const removeFromHistory = () => {
+        const userId = localStorage.getItem('userId');
+        const key = `history_${userId}`;
+        const current = JSON.parse(localStorage.getItem(key)) || [];
+        const updated = current.filter(g => g.id !== game.id);
+        localStorage.setItem(key, JSON.stringify(updated));
+        setIsInHistory(false);
+    };
+
+
+
+
+
     if (loading) return <div className="loading-spinner">Loading...</div>;
     if (error) return <div className="error-message">Error: {error}</div>;
     if (!game) return <div className="not-found">Game not found</div>;
 
     return (
         <div className="game-details">
-            <Link to="/" className="back-button">Back to Games</Link>
+            <Link to="/search" className="back-button">Back to Games</Link>
+
             
             <h1>{game.name}</h1>
             
@@ -110,6 +173,23 @@ const GameDetails = () => {
                 <p><strong>Players:</strong> {game.minPlayers} - {game.maxPlayers}</p>
                 <p><strong>Play Time:</strong> {game.playTime} minutes</p>
                 <p><strong>Description:</strong> {game.description}</p>
+                {isLoggedIn && (
+                    <div className="game-actions">
+                        {isInWishlist ? (
+                            <button onClick={removeFromWishlist} className="action-button remove">Remove from Wishlist</button>
+                        ) : (
+                            <button onClick={addToWishlist} className="action-button">Add to Wishlist</button>
+                        )}
+
+                        {isInHistory ? (
+                            <button onClick={removeFromHistory} className="action-button remove">Remove from History</button>
+                        ) : (
+                            <button onClick={addToHistory} className="action-button">Add as Played</button>
+                        )}
+                    </div>
+
+                )}
+
             </div>
             
             <RatingSystem gameId={id} />

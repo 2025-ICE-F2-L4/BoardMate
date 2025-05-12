@@ -1,0 +1,234 @@
+.board-games-table {
+    width: 90%;
+    max-width: 700px;
+    margin: -10px auto 0 auto;
+    border-collapse: collapse;
+    border: 2px solid black;
+    table-layout: fixed;
+    background-color: rgba(154, 147, 196, 0.95);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.board-games-table th,
+.board-games-table td {
+  border: 1px solid black;
+  padding: 10px;
+  text-align: center;
+}
+
+.board-games-table th {
+  background-color: #432E8C;
+  color: white;
+  font-weight: bold;
+}
+
+.board-games-table tr {
+  background-color: #9a93c4;
+}
+
+.board-games-table tr:hover {
+  background-color: #76709c;
+}
+
+.no-games {
+  text-align: center;
+  font-style: italic;
+  color: white;
+}
+
+.board-games-container {
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 600px;
+  min-height: 300px;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+.clickable-row {
+  cursor: pointer;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #6258A6;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+    padding-right: 230px;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #0056b3;
+  box-shadow: 0px 0px 5px rgba(0, 91, 187, 0.5);
+}
+
+.dropdown-results {
+  background-color: rgba(98, 88, 166, 0.6);
+  backdrop-filter: blur(4px);
+  margin: 0 auto;
+  max-width: 600px;
+  width: 90%;
+  margin-top: 10px;
+  padding: 5px 0;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.dropdown-item {
+  padding: 12px 16px;
+  color: white;
+  text-align: left;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.dropdown-item:hover {
+  background-color: rgba(98, 88, 166, 0.85);
+}
+
+.search-bar-wrapper {
+    width: 100vw;
+    background-color: rgba(98, 88, 166, 0.3);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 0;
+    margin-top: 100px;
+    position: relative;
+}
+
+.search-table-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.table-wrapper {
+    width: 100%;
+    max-width: 90%;
+    margin-top: 10px;
+}
+
+.search-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    z-index: 20;
+}
+
+.search-controls {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    z-index: 21;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.search-button {
+    background-color: #432E8C;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.search-button:hover {
+    background-color: #342371;
+}
+
+.genre-filter {
+    display: none;
+}
+
+.genre-select {
+    width: 150px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #6258A6;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #432E8C;
+    font-size: 14px;
+    cursor: pointer;
+    height: 100%;
+}
+
+.genre-select:focus {
+    outline: none;
+    border-color: #0056b3;
+    box-shadow: 0px 0px 5px rgba(0, 91, 187, 0.5);
+}
+
+@media (max-width: 600px) {
+    .search-input {
+        padding-right: 170px;
+    }
+    
+    .genre-select {
+        width: 100px;
+        font-size: 12px;
+        padding: 6px 8px;
+    }
+    
+    .search-button {
+        font-size: 12px;
+        padding: 6px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-bar-wrapper {
+        margin-top: 80px;
+        padding: 3px 0;
+    }
+
+    .search-container {
+        max-width: 80%;
+    }
+
+    .search-input {
+        padding-right: 120px;
+        font-size: 12px;
+        padding: 5px 40px 3px 3px;
+    }
+
+    .search-button {
+        font-size: 10px;
+        padding: 4px 6px;
+    }
+
+    .board-games-table {
+        width: 85%;
+        font-size: 8px;
+    }
+
+    .board-games-table th,
+    .board-games-table td {
+        padding: 6px;
+    }
+    
+    .genre-select {
+        width: 70px;
+        font-size: 10px;
+        padding: 4px 6px;
+    }
+}

@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import './styles/global.css';
-import BoardGamesList from './components/BoardGamesList';
+import BoardGamesList from './components/Home';
 import GameDetails from './components/GameDetailsView';
 import AdminPanel from './components/AdminPanel';
 import Login from './components/Login';
 import Navbar from './components/Navbar';
 import Profile from './components/Profile';
+import Search from './components/Search';
+
 
 function AppWrapper() {
     const location = useLocation();
@@ -27,6 +29,8 @@ function AppWrapper() {
                 <Route path="/admin" element={<AdminPanel />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/search" element={<Search />} />
+
             </Routes>
         </div>
     );
