@@ -84,5 +84,17 @@ router.get("/userRatings", async (req, res) => {
 		return res.status(500).json({ error: err.message });
 	}
 });
+router.delete("/userRating", async (req, res) => {
+	const { userID } = req.query;
+	try {
+		const [results] = await db.query(
+			"DELETE FROM ratings WHERE ratings.user_id = ?",
+			[userID],
+		);
 
+		return res.json(results);
+	} catch (err) {
+		return res.status(500).json({ error: err.message });
+	}
+});
 export default router;
