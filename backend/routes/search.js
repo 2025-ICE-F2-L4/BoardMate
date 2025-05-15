@@ -7,7 +7,11 @@ router.get("/search", async (req, res) => {
 	if (genreID == null) {
 		try {
 			const [results] = await db.query(
-				"SELECT id, name FROM games WHERE name LIKE ?",
+				"SELECT games.id, name\
+                FROM games LEFT JOIN ratings ON  ratings.game_id = games.id\
+                WHERE name LIKE ?\
+                GROUP BY games.id, name\
+                ORDER BY AVG(ratings.rating) DESC",
 				["%" + phrase + "%"],
 			);
 
@@ -19,11 +23,14 @@ router.get("/search", async (req, res) => {
 	} else {
 		try {
 			const [results] = await db.query(
-				"SELECT games.id, name, genres.genre\
+				" SELECT games.id, name, genres.genre\
                 FROM games\
                 JOIN games_genres ON games.id = games_genres.game_id\
                 JOIN genres ON games_genres.genre_id = genres.id\
-                WHERE games_genres.genre_id = ? AND name LIKE ?",
+                LEFT JOIN ratings ON ratings.game_id = games.id\
+                WHERE games_genres.genre_id = ? AND name LIKE ?\
+                GROUP BY games.id, name, genres.genre\
+                ORDER BY AVG(ratings.rating) DESC ",
 				[genreID, "%" + phrase + "%"],
 			);
 			const resultsWithNoGenre = results.map(({ genre, ...rest }) => rest);
