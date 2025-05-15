@@ -68,4 +68,19 @@ router.get("/recommendations", async (req, res) => {
 	}
 });
 
+router.get("/userRatings", async (req, res) => {
+	const { userID } = req.query;
+	try {
+		const [results] = await db.query(
+			"SELECT game_id, timestamp, comment, rating\
+            FROM ratings\
+            WHERE user_id = ?",
+			[userID],
+		);
+		return res.json(results);
+	} catch (err) {
+		return res.status(500).json({ error: err.message });
+	}
+});
+
 export default router;
