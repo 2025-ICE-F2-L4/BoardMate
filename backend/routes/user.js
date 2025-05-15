@@ -49,7 +49,9 @@ router.get("/profilePicture", async (req, res) => {
 });
 
 router.get("/recommendations", async (req, res) => {
-	const { count } = req.query;
+	let { count } = req.query;
+	count = min(count, 25);
+
 	try {
 		const [results] = await db.query(
 			"SELECT game_id\
