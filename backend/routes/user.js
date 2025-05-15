@@ -50,7 +50,7 @@ router.get("/profilePicture", async (req, res) => {
 
 router.get("/recommendations", async (req, res) => {
 	let { count } = req.query;
-	count = min(count, 25);
+	if (count > 25) count = 25;
 
 	try {
 		const [results] = await db.query(

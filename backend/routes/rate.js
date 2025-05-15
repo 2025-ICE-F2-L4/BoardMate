@@ -12,10 +12,13 @@ router.post("/rate", async (req, res) => {
 		);
 		if (validationResults.length != 0)
 			throw new Error("Cannot add multiple comments");
+		let clampedRating = rating;
+		if (clampedRating < 0) clampedRating = 0;
+		if (clampedRating > 5) clampedRating = 5;
 
 		const [results] = await db.query(
 			"INSERT INTO ratings (user_id,game_id,comment,rating) VALUES(?,?,?,?)",
-			[userID, gameID, comment, clamp(rating, 0, 5)],
+			[userID, gameID, comment, clampedRating],
 		);
 		return res.json(results);
 	} catch (err) {
