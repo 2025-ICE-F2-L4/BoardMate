@@ -7,8 +7,8 @@ router.post("/rate", async (req, res) => {
 
 	try {
 		const [validationResults] = await db.query(
-			"SELECT * FROM ratings WHERE user_id = ?",
-			[userID],
+			"SELECT * FROM ratings WHERE user_id = ? AND game_id = ?",
+			[userID, gameID],
 		);
 		if (validationResults.length != 0)
 			throw new Error("Cannot add multiple comments");
