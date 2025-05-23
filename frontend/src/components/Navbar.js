@@ -8,9 +8,12 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [username, setUsername] = useState("");
 
     useEffect(() => {
         const userId = localStorage.getItem('userId');
+        const savedUsername = localStorage.getItem('login');
+        if (savedUsername) setUsername(savedUsername);
         setIsLoggedIn(!!userId);
     }, []);
 
@@ -32,8 +35,11 @@ const Navbar = () => {
             <div className="nav-buttons-container">
                 <button className="nav-button" onClick={() => handleNavigate('/')}>Home</button>
                 <button className="nav-button" onClick={() => handleNavigate('/search')}>Search</button>
-                <button className="nav-button" onClick={() => handleNavigate('/admin')}>Admin</button>
-
+                {username == 'admin' && isLoggedIn ? (
+                    <button className="nav-button" onClick={() => handleNavigate('/admin')}>Admin</button>
+                ) : (
+                    <></>
+                )}
 
                 {isLoggedIn ? (
                     <>
