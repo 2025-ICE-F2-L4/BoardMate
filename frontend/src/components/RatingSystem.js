@@ -12,12 +12,39 @@ const RatingSystem = ({ gameId }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [submitSuccess, setSubmitSuccess] = useState(false);
+    const [deleteSuccess, setDeleteSuccess] = useState(false);
     const [hasUserRated, setHasUserRated] = useState(false);
     const [userExistingRating, setUserExistingRating] = useState(null);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     const userId = localStorage.getItem('userId');
     const userLogin = localStorage.getItem('login');
     const isLoggedIn = !!userId;
+
+    const fetchRatings = async () => {
+        try {
+            const ratingsResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/rate?gameID=${gameId}`);
+            if (!ratingsResponse.ok) {
+                throw new Error('Failed to load ratings');
+            }
+            const ratingsData = await ratingsResponse.json();
+            setRatings(ratingsData);
+            
+            if (isLoggedIn && userLogin) {
+                const userExistingRating = ratingsData.find(rating => rating.login === userLogin);
+                if (userExistingRating) {
+                    setHasUserRated(true);
+                    setUserExistingRating(userExistingRating);
+                } else {
+                    setHasUserRated(false);
+                    setUserExistingRating(null);
+                }
+            }
+        } catch (err) {
+            setError(err.message);
+            console.error('Error fetching ratings:', err);
+        }
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,20 +56,8 @@ const RatingSystem = ({ gameId }) => {
                 const detailsData = await detailsResponse.json();
                 setGameDetails(detailsData);
 
-                const ratingsResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/rate?gameID=${gameId}`);
-                if (!ratingsResponse.ok) {
-                    throw new Error('Failed to load ratings');
-                }
-                const ratingsData = await ratingsResponse.json();
-                setRatings(ratingsData);
+                await fetchRatings();
                 
-                if (isLoggedIn && userLogin) {
-                    const userExistingRating = ratingsData.find(rating => rating.login === userLogin);
-                    if (userExistingRating) {
-                        setHasUserRated(true);
-                        setUserExistingRating(userExistingRating);
-                    }
-                }
             } catch (err) {
                 setError(err.message);
                 console.error('Error fetching data:', err);
@@ -86,15 +101,7 @@ const RatingSystem = ({ gameId }) => {
             setComment('');
             setSubmitSuccess(true);
             
-            const newRatingsResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/rate?gameID=${gameId}`);
-            const newRatingsData = await newRatingsResponse.json();
-            setRatings(newRatingsData);
-            
-            const userNewRating = newRatingsData.find(rating => rating.login === userLogin);
-            if (userNewRating) {
-                setHasUserRated(true);
-                setUserExistingRating(userNewRating);
-            }
+            await fetchRatings();
 
             setTimeout(() => {
                 setSubmitSuccess(false);
@@ -103,6 +110,43 @@ const RatingSystem = ({ gameId }) => {
         } catch (err) {
             setError(err.message);
             console.error('Error submitting rating:', err);
+        }
+    };
+    
+    const handleDeleteRating = async () => {
+        if (!isLoggedIn || !hasUserRated) return;
+        
+        setIsDeleting(true);
+        setError(null);
+        
+        try {
+            const response = await fetch(
+                `${process.env.REACT_APP_BACKEND_URL}/userRating?userID=${userId}&gameID=${gameId}`, 
+                {
+                    method: 'DELETE',
+                }
+            );
+            
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to delete rating');
+            }
+            
+            setDeleteSuccess(true);
+            setHasUserRated(false);
+            setUserExistingRating(null);
+            
+            await fetchRatings();
+            
+            setTimeout(() => {
+                setDeleteSuccess(false);
+            }, 3000);
+            
+        } catch (err) {
+            setError(err.message);
+            console.error('Error deleting rating:', err);
+        } finally {
+            setIsDeleting(false);
         }
     };
 
@@ -148,6 +192,18 @@ const RatingSystem = ({ gameId }) => {
                 )}
                 <span className="rating-count">({ratings.length} {ratings.length === 1 ? 'review' : 'reviews'})</span>
             </div>
+            
+            {deleteSuccess && (
+                <div className="success-message">
+                    Your review has been deleted successfully!
+                </div>
+            )}
+            
+            {error && (
+                <div className="error-message">
+                    {error}
+                </div>
+            )}
 
             {isLoggedIn && (
                 hasUserRated ? (
@@ -170,6 +226,18 @@ const RatingSystem = ({ gameId }) => {
                         <div className="rating-date">
                             Posted on {new Date(userExistingRating?.timestamp).toLocaleDateString()}
                         </div>
+                        
+                        <button 
+                            onClick={handleDeleteRating}
+                            disabled={isDeleting}
+                            className="delete-rating-button"
+                        >
+                            {isDeleting ? 'Deleting...' : 'Delete Review'}
+                        </button>
+                        
+                        <p className="rating-note">
+                            Delete your review if you want to submit a new one.
+                        </p>
                     </div>
                 ) : (
                     <div className="add-rating">
@@ -210,8 +278,6 @@ const RatingSystem = ({ gameId }) => {
                                 Submit Review
                             </button>
 
-                            {error && <div className="error-message">{error}</div>}
-                            
                             {submitSuccess && (
                                 <div className="success-message">
                                     Your review has been submitted successfully!
@@ -233,8 +299,6 @@ const RatingSystem = ({ gameId }) => {
 
                 {isLoading ? (
                     <p>Loading reviews...</p>
-                ) : error ? (
-                    <p className="error-message">Error loading reviews: {error}</p>
                 ) : ratings.length === 0 ? (
                     <p>No reviews yet. Be the first to review!</p>
                 ) : (

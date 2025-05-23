@@ -214,6 +214,52 @@ textarea {
   font-style: italic;
 }
 
+.delete-rating-button {
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-top: 15px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.delete-rating-button:hover {
+  background-color: #b71c1c;
+}
+
+.delete-rating-button:disabled {
+  background-color: #aaaaaa;
+  cursor: not-allowed;
+}
+
+.rating-note {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+  margin-top: 8px;
+}
+
+.success-message {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: #2e7d32;
+  padding: 12px 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.error-message {
+  background-color: rgba(244, 67, 54, 0.2);
+  color: #c62828;
+  padding: 12px 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
 @media (max-width: 768px) {
   .rating-header {
     flex-direction: column;
