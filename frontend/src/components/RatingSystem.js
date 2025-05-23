@@ -12,8 +12,11 @@ const RatingSystem = ({ gameId }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [submitSuccess, setSubmitSuccess] = useState(false);
+    const [hasUserRated, setHasUserRated] = useState(false);
+    const [userExistingRating, setUserExistingRating] = useState(null);
 
     const userId = localStorage.getItem('userId');
+    const userLogin = localStorage.getItem('login');
     const isLoggedIn = !!userId;
 
     useEffect(() => {
@@ -24,7 +27,6 @@ const RatingSystem = ({ gameId }) => {
                     throw new Error('Failed to load game details');
                 }
                 const detailsData = await detailsResponse.json();
-
                 setGameDetails(detailsData);
 
                 const ratingsResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/rate?gameID=${gameId}`);
@@ -33,6 +35,14 @@ const RatingSystem = ({ gameId }) => {
                 }
                 const ratingsData = await ratingsResponse.json();
                 setRatings(ratingsData);
+                
+                if (isLoggedIn && userLogin) {
+                    const userExistingRating = ratingsData.find(rating => rating.login === userLogin);
+                    if (userExistingRating) {
+                        setHasUserRated(true);
+                        setUserExistingRating(userExistingRating);
+                    }
+                }
             } catch (err) {
                 setError(err.message);
                 console.error('Error fetching data:', err);
@@ -42,7 +52,7 @@ const RatingSystem = ({ gameId }) => {
         };
 
         fetchData();
-    }, [gameId]);
+    }, [gameId, isLoggedIn, userLogin]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -66,27 +76,25 @@ const RatingSystem = ({ gameId }) => {
                 }),
             });
 
-            const responseData = await response.clone().json().catch(() => ({}));
-            console.log("Rating response:", response.status, responseData);
+            const responseData = await response.json();
 
             if (!response.ok) {
-                throw new Error('Failed to submit rating');
+                throw new Error(responseData.error || 'Failed to submit rating');
             }
 
             setUserRating(0);
             setComment('');
             setSubmitSuccess(true);
-
-            const [newDetailsResponse, newRatingsResponse] = await Promise.all([
-                fetch(`${process.env.REACT_APP_BACKEND_URL}/gameDetails?id=${gameId}`),
-                fetch(`${process.env.REACT_APP_BACKEND_URL}/rate?gameID=${gameId}`)
-            ]);
             
-            const newDetailsData = await newDetailsResponse.json();
+            const newRatingsResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/rate?gameID=${gameId}`);
             const newRatingsData = await newRatingsResponse.json();
-            
-            setGameDetails(newDetailsData);
             setRatings(newRatingsData);
+            
+            const userNewRating = newRatingsData.find(rating => rating.login === userLogin);
+            if (userNewRating) {
+                setHasUserRated(true);
+                setUserExistingRating(userNewRating);
+            }
 
             setTimeout(() => {
                 setSubmitSuccess(false);
@@ -141,53 +149,80 @@ const RatingSystem = ({ gameId }) => {
                 <span className="rating-count">({ratings.length} {ratings.length === 1 ? 'review' : 'reviews'})</span>
             </div>
 
-            {isLoggedIn ? (
-                <div className="add-rating">
-                    <h3>Add Your Review</h3>
-                    <form onSubmit={handleSubmit}>
-                        <div className="star-rating">
-                            {[...Array(5)].map((_, index) => {
-                                const starValue = index + 1;
-                                return (
-                                    <label key={index}>
-                                        <input
-                                            type="radio"
-                                            name="rating"
-                                            value={starValue}
-                                            onClick={() => setUserRating(starValue)}
-                                        />
-                                        <FaStar
-                                            size={30}
-                                            className={starValue <= (hover || userRating) ? "star-filled" : "star-empty"}
-                                            onMouseEnter={() => setHover(starValue)}
-                                            onMouseLeave={() => setHover(0)}
-                                        />
-                                    </label>
-                                );
-                            })}
+            {isLoggedIn && (
+                hasUserRated ? (
+                    <div className="user-existing-rating">
+                        <h3>Your Review</h3>
+                        <div className="user-stars">
+                            {[...Array(5)].map((_, i) => (
+                                <FaStar
+                                    key={i}
+                                    size={24}
+                                    className={i < userExistingRating?.rating ? "star-filled" : "star-empty"}
+                                />
+                            ))}
                         </div>
-
-                        <div className="comment-input">
-                            <textarea
-                                placeholder="Write your review (optional)"
-                                value={comment}
-                                onChange={(e) => setComment(e.target.value)}
-                                rows={4}
-                            />
-                        </div>
-
-                        <button type="submit" className="submit-rating">
-                            Submit Review
-                        </button>
-
-                        {submitSuccess && (
-                            <div className="success-message">
-                                Your review has been submitted successfully!
+                        {userExistingRating?.comment && (
+                            <div className="user-comment">
+                                <p>{userExistingRating.comment}</p>
                             </div>
                         )}
-                    </form>
-                </div>
-            ) : (
+                        <div className="rating-date">
+                            Posted on {new Date(userExistingRating?.timestamp).toLocaleDateString()}
+                        </div>
+                    </div>
+                ) : (
+                    <div className="add-rating">
+                        <h3>Add Your Review</h3>
+                        <form onSubmit={handleSubmit}>
+                            <div className="star-rating">
+                                {[...Array(5)].map((_, index) => {
+                                    const starValue = index + 1;
+                                    return (
+                                        <label key={index}>
+                                            <input
+                                                type="radio"
+                                                name="rating"
+                                                value={starValue}
+                                                onClick={() => setUserRating(starValue)}
+                                            />
+                                            <FaStar
+                                                size={30}
+                                                className={starValue <= (hover || userRating) ? "star-filled" : "star-empty"}
+                                                onMouseEnter={() => setHover(starValue)}
+                                                onMouseLeave={() => setHover(0)}
+                                            />
+                                        </label>
+                                    );
+                                })}
+                            </div>
+
+                            <div className="comment-input">
+                                <textarea
+                                    placeholder="Write your review (optional)"
+                                    value={comment}
+                                    onChange={(e) => setComment(e.target.value)}
+                                    rows={4}
+                                />
+                            </div>
+
+                            <button type="submit" className="submit-rating">
+                                Submit Review
+                            </button>
+
+                            {error && <div className="error-message">{error}</div>}
+                            
+                            {submitSuccess && (
+                                <div className="success-message">
+                                    Your review has been submitted successfully!
+                                </div>
+                            )}
+                        </form>
+                    </div>
+                )
+            )}
+
+            {!isLoggedIn && (
                 <div className="login-prompt">
                     <p>Please <a href="/login">log in</a> to leave a review</p>
                 </div>

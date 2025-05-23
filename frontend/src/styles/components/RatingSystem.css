@@ -185,6 +185,35 @@ textarea {
   margin-bottom: 15px;
 }
 
+.user-existing-rating {
+  background-color: rgba(67, 46, 140, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.user-existing-rating h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.user-existing-rating .user-stars {
+  margin-bottom: 15px;
+}
+
+.user-existing-rating .user-comment {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.user-existing-rating .rating-date {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+}
+
 @media (max-width: 768px) {
   .rating-header {
     flex-direction: column;
