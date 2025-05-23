@@ -85,15 +85,76 @@ router.get("/userRatings", async (req, res) => {
 	}
 });
 router.delete("/userRating", async (req, res) => {
+	const { userID, gameID } = req.query;
+	try {
+		const [results] = await db.query(
+			"DELETE FROM ratings WHERE ratings.user_id = ? AND ratings.game_id = ?",
+			[userID, gameID],
+		);
+
+		return res.json(results);
+	} catch (err) {
+		return res.status(500).json({ error: err.message });
+	}
+});
+
+router.patch("/userRating", async (req, res) => {
+	const { userID, gameID, newComment, newRating } = req.body;
+	try {
+		let clampedRating = newRating;
+		if (clampedRating > 5) clampedRating = 5;
+		else if (clampedRating < 0) clampedRating = 0;
+		const [results] = await db.query(
+			"UPDATE ratings\
+            SET ratings.comment = ?, ratings.rating = ?, ratings.timestamp = CURRENT_TIMESTAMP()\
+            WHERE ratings.user_id = ? AND ratings.game_id = ?",
+			[newComment, clampedRating, userID, gameID],
+		);
+
+		return res.json(results);
+	} catch (err) {
+		return res.status(500).json({ error: err.message });
+	}
+});
+
+router.get("/userWishlist", async (req, res) => {
 	const { userID } = req.query;
 	try {
 		const [results] = await db.query(
-			"DELETE FROM ratings WHERE ratings.user_id = ?",
+			"SELECT game_id, timestamp FROM game_wishlists WHERE user_id = ?",
 			[userID],
 		);
 
 		return res.json(results);
 	} catch (err) {
+		return res.status(500).json({ error: err.message });
+	}
+});
+
+router.post("/userWishlist", async (req, res) => {
+	const { userID, gameID } = req.body;
+	try {
+		const [results] = await db.query(
+			"INSERT INTO game_wishlists (user_id, game_id) VALUES(?, ?)",
+			[userID, gameID],
+		);
+		return res.json(results);
+	} catch (err) {
+		console.error(err);
+		return res.status(500).json({ error: err.message });
+	}
+});
+
+router.delete("/userWishlist", async (req, res) => {
+	const { userID, gameID } = req.query;
+	try {
+		const [results] = await db.query(
+			"DELETE FROM game_wishlists WHERE game_wishlists.user_id = ? AND game_wishlists.game_id = ?",
+			[userID, gameID],
+		);
+		return res.json(results);
+	} catch (err) {
+		console.error(err);
 		return res.status(500).json({ error: err.message });
 	}
 });
