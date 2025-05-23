@@ -2,6 +2,27 @@ import db from "../db.js";
 import express from "express";
 const router = express.Router();
 
+router.post("/register", async (req, res) => {
+	const { user, password, age } = req.body;
+	try {
+		const [validateResults] = await db.query(
+			"SELECT id FROM users WHERE login = ?",
+			[user],
+		);
+		if (validateResults.length != 0)
+			return res.status(400).json({ error: "Username already used" });
+
+		const [results] = await db.query(
+			"INSERT INTO users (login, password, age) VALUES(?, ?, ?)",
+			[user, password, age],
+		);
+		return res.json(results);
+	} catch (err) {
+		console.error(err);
+		return res.status(500).json({ error: err.message });
+	}
+});
+
 router.get("/login", async (req, res) => {
 	const { user, password } = req.query;
 
