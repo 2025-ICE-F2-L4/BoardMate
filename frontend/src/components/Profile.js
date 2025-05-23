@@ -2,7 +2,6 @@
 import '../styles/components/Profile.css';
 import { Link } from "react-router-dom";
 
-
 function Profile() {
     const [bio, setBio] = useState("");
     const [editingBio, setEditingBio] = useState(false);
@@ -10,8 +9,8 @@ function Profile() {
     const [username, setUsername] = useState("");
     const [wishlistItems, setWishlistItems] = useState([]);
     const [historyItems, setHistoryItems] = useState([]);
-
-
+    const [wishlistError, setWishlistError] = useState(null);
+    const [isWishlistLoading, setIsWishlistLoading] = useState(false);
 
     useEffect(() => {
         const savedBio = localStorage.getItem('bio');
@@ -19,7 +18,6 @@ function Profile() {
         const savedUsername = localStorage.getItem('login');
         const userId = localStorage.getItem('userId');
     
-
         if (savedBio) {
             setBio(savedBio);
         }
@@ -33,18 +31,43 @@ function Profile() {
                 if (!userId) return;
 
                 try {
-                    const wishlist = JSON.parse(localStorage.getItem(`wishlist_${userId}`)) || [];
+                    setIsWishlistLoading(true);
+                    const wishlistResponse = await fetch(
+                        `${process.env.REACT_APP_BACKEND_URL}/userWishlist?userID=${userId}`
+                    );
+                    
+                    if (!wishlistResponse.ok) {
+                        throw new Error('Failed to fetch wishlist');
+                    }
+                    
+                    const wishlistData = await wishlistResponse.json();
+                    console.log("Wishlist data from API:", wishlistData);
+                    
+                    const wishlistDetailsPromises = wishlistData.map(item => 
+                        fetch(`${process.env.REACT_APP_BACKEND_URL}/gameDetails?id=${item.game_id}`)
+                            .then(res => {
+                                if (!res.ok) throw new Error(`Failed to fetch game ${item.game_id}`);
+                                return res.json();
+                            })
+                            .then(game => ({ ...game, id: item.game_id }))
+                    );
+                    
+                    const wishlistDetails = await Promise.all(wishlistDetailsPromises);
+                    setWishlistItems(wishlistDetails);
+                    setWishlistError(null);
+                    
                     const history = JSON.parse(localStorage.getItem(`history_${userId}`)) || [];
-
-                    setWishlistItems(wishlist);
                     setHistoryItems(history);
+                    
                 } catch (err) {
                     console.error("Error fetching user data:", err);
+                    setWishlistError(err.message);
+                } finally {
+                    setIsWishlistLoading(false);
                 }
             };
 
             fetchUserLists();
-
         }
     }, []);
 
@@ -70,11 +93,27 @@ function Profile() {
         }
     };
 
-    const clearWishlist = () => {
+    const clearWishlist = async () => {
         const userId = localStorage.getItem("userId");
-        if (!userId) return;
-        localStorage.removeItem(`wishlist_${userId}`);
-        setWishlistItems([]);
+        if (!userId || wishlistItems.length === 0) return;
+        
+        setIsWishlistLoading(true);
+        try {
+            const deletePromises = wishlistItems.map(item => 
+                fetch(`${process.env.REACT_APP_BACKEND_URL}/userWishlist?userID=${userId}&gameID=${item.id}`, {
+                    method: 'DELETE'
+                })
+            );
+            
+            await Promise.all(deletePromises);
+            setWishlistItems([]);
+            
+        } catch (err) {
+            console.error("Error clearing wishlist:", err);
+            setWishlistError(err.message);
+        } finally {
+            setIsWishlistLoading(false);
+        }
     };
 
     const clearHistory = () => {
@@ -83,7 +122,6 @@ function Profile() {
         localStorage.removeItem(`history_${userId}`);
         setHistoryItems([]);
     };
-
 
     return (
         <div className="profile-page">
@@ -120,18 +158,29 @@ function Profile() {
                 </div>
 
                 <div className="profile-right">
-
                     <div className="wishlist-box">
                         <h2>Wishlist</h2>
-                        {wishlistItems.length > 0 ? (
+                        {wishlistError && (
+                            <p className="error-message">Error loading wishlist: {wishlistError}</p>
+                        )}
+                        
+                        {isWishlistLoading ? (
+                            <p>Loading wishlist...</p>
+                        ) : wishlistItems.length > 0 ? (
                             wishlistItems.map((game, i) => <p key={i}>{game.name}</p>)
                         ) : (
                             <p>No games in wishlist yet.</p>
                         )}
+                        
                         {wishlistItems.length > 0 && (
-                            <button onClick={clearWishlist} className="clear-button">Clear Wishlist</button>
+                            <button 
+                                onClick={clearWishlist} 
+                                className="clear-button"
+                                disabled={isWishlistLoading}
+                            >
+                                {isWishlistLoading ? 'Clearing...' : 'Clear Wishlist'}
+                            </button>
                         )}
-
                     </div>
 
                     <div className="history-box">
@@ -144,14 +193,8 @@ function Profile() {
                         {historyItems.length > 0 && (
                             <button onClick={clearHistory} className="clear-button">Clear History</button>
                         )}
-
                     </div>
-
                 </div>
-
-
-
-
             </div>
         </div>
     );

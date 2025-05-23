@@ -16,10 +16,32 @@ const GameDetails = () => {
     const historyRecorded = useRef(false);
     const [isInWishlist, setIsInWishlist] = useState(false);
     const [isInHistory, setIsInHistory] = useState(false);
+    const [wishlistLoading, setWishlistLoading] = useState(false);
 
+    const checkWishlistStatus = async (gameId) => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/userWishlist?userID=${userId}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch wishlist');
+            }
+            
+            const wishlistData = await response.json();
+            
+            const gameIdString = String(gameId);
+            const isInWishlist = wishlistData.some(item => String(item.game_id) === gameIdString);
+            console.log(`Checking wishlist for game ${gameIdString}:`, wishlistData);
+            console.log(`Result: ${isInWishlist}`);
+            return isInWishlist;
+            
+        } catch (err) {
+            console.error('Error checking wishlist status:', err);
+            return false;
+        }
+    };
 
     useEffect(() => {
         historyRecorded.current = false;
+        setLoading(true);
         
         const fetchGameDetails = async () => {
             if (!id) {
@@ -29,6 +51,12 @@ const GameDetails = () => {
             }
 
             try {
+                if (userId) {
+                    console.log("Checking wishlist status on page load...");
+                    const inWishlist = await checkWishlistStatus(id);
+                    console.log(`Initial wishlist check: Game ${id} in wishlist: ${inWishlist}`);
+                    setIsInWishlist(inWishlist);
+                }
                 const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/gameDetails?id=${id}`);
                 if (!response.ok) {
                     throw new Error('Game not found');
@@ -39,11 +67,8 @@ const GameDetails = () => {
                 
                 setGame(data);
 
-                if (userId && data?.id) {
-                    const wishlist = JSON.parse(localStorage.getItem(`wishlist_${userId}`)) || [];
+                if (userId && data) {
                     const history = JSON.parse(localStorage.getItem(`history_${userId}`)) || [];
-
-                    setIsInWishlist(wishlist.some(g => g.id === data.id));
                     setIsInHistory(history.some(g => g.id === data.id));
                 }
                 
@@ -51,17 +76,16 @@ const GameDetails = () => {
                     recordGameView(id);
                     historyRecorded.current = true;
                 }
-                
-                setLoading(false);
             } catch (err) {
                 setError(err.message);
+                console.error('Error in fetchGameDetails:', err);
+            } finally {
                 setLoading(false);
             }
-
         };
 
         fetchGameDetails();
-    }, [id, isLoggedIn]);
+    }, [id, isLoggedIn, userId]);
 
     const recordGameView = async (gameId) => {
         try {
@@ -97,18 +121,45 @@ const GameDetails = () => {
         }
     };
 
-    const addToWishlist = async (gameId) => {
-        const userId = localStorage.getItem('userId');
+    const addToWishlist = async () => {
         if (!userId) {
             alert("You must be logged in.");
             return;
         }
-        const key = `wishlist_${userId}`;
-        const current = JSON.parse(localStorage.getItem(key)) || [];
-        const updated = [...current, { id: parseInt(game.id), name: game.name }];
-        localStorage.setItem(key, JSON.stringify(updated));
-        setIsInWishlist(true);
-
+        
+        setWishlistLoading(true);
+        
+        try {
+            const alreadyInWishlist = await checkWishlistStatus(id);
+            if (alreadyInWishlist) {
+                setIsInWishlist(true);
+                return;
+            }
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/userWishlist`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userID: parseInt(userId, 10),
+                    gameID: parseInt(id, 10) // Use id from URL instead of game.id
+                }),
+            });
+            const responseData = await response.text();
+            console.log('Wishlist API response:', responseData);
+            
+            if (!response.ok) {
+                throw new Error(`Failed to add to wishlist: ${responseData}`);
+            }
+            
+            setIsInWishlist(true);
+            
+        } catch (err) {
+            console.error('Error adding to wishlist:', err);
+            alert(`Failed to add to wishlist: ${err.message}`);
+        } finally {
+            setWishlistLoading(false);
+        }
     };
 
     const addToHistory = async (gameId) => {
@@ -121,16 +172,38 @@ const GameDetails = () => {
         const updated = [...current, { id: parseInt(game.id), name: game.name }];
         localStorage.setItem(key, JSON.stringify(updated));
         setIsInHistory(true);
-
     };
 
-    const removeFromWishlist = () => {
-        const userId = localStorage.getItem('userId');
-        const key = `wishlist_${userId}`;
-        const current = JSON.parse(localStorage.getItem(key)) || [];
-        const updated = current.filter(g => g.id !== game.id);
-        localStorage.setItem(key, JSON.stringify(updated));
-        setIsInWishlist(false);
+    const removeFromWishlist = async () => {
+        if (!userId) {
+            return;
+        }
+        
+        setWishlistLoading(true);
+        
+        try {
+            const response = await fetch(
+                `${process.env.REACT_APP_BACKEND_URL}/userWishlist?userID=${userId}&gameID=${id}`, 
+                {
+                    method: 'DELETE'
+                }
+            );
+            
+            const responseData = await response.text();
+            console.log('Wishlist removal API response:', responseData);
+            
+            if (!response.ok) {
+                throw new Error(`Failed to remove from wishlist: ${responseData}`);
+            }
+            
+            setIsInWishlist(false);
+            
+        } catch (err) {
+            console.error('Error removing from wishlist:', err);
+            alert(`Failed to remove from wishlist: ${err.message}`);
+        } finally {
+            setWishlistLoading(false);
+        }
     };
 
     const removeFromHistory = () => {
@@ -141,10 +214,6 @@ const GameDetails = () => {
         localStorage.setItem(key, JSON.stringify(updated));
         setIsInHistory(false);
     };
-
-
-
-
 
     if (loading) return <div className="loading-spinner">Loading...</div>;
     if (error) return <div className="error-message">Error: {error}</div>;
@@ -176,9 +245,21 @@ const GameDetails = () => {
                 {isLoggedIn && (
                     <div className="game-actions">
                         {isInWishlist ? (
-                            <button onClick={removeFromWishlist} className="action-button remove">Remove from Wishlist</button>
+                            <button 
+                                onClick={removeFromWishlist} 
+                                className="action-button remove"
+                                disabled={wishlistLoading}
+                            >
+                                {wishlistLoading ? 'Removing...' : 'Remove from Wishlist'}
+                            </button>
                         ) : (
-                            <button onClick={addToWishlist} className="action-button">Add to Wishlist</button>
+                            <button 
+                                onClick={addToWishlist} 
+                                className="action-button"
+                                disabled={wishlistLoading}
+                            >
+                                {wishlistLoading ? 'Adding...' : 'Add to Wishlist'}
+                            </button>
                         )}
 
                         {isInHistory ? (
@@ -187,9 +268,7 @@ const GameDetails = () => {
                             <button onClick={addToHistory} className="action-button">Add as Played</button>
                         )}
                     </div>
-
                 )}
-
             </div>
             
             <RatingSystem gameId={id} />
