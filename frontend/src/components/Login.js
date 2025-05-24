@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/components/Login.css';
+import Signup from './Signup';
+
+
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -39,7 +42,7 @@ const Login = () => {
     };
 
     return (
-        <div className="login-container">
+        <div className="auth-wrapper">
             <div className="login-card">
                 <h1 className="login-heading">Hello there,<br />welcome back</h1>
                 
@@ -83,6 +86,7 @@ const Login = () => {
                     New here? <a href="/signup">Sign Up instead</a>
                 </div>
             </div>
+            <Signup />
         </div>
     );
 };

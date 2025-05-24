@@ -184,7 +184,7 @@ function Profile() {
                     </div>
 
                     <div className="history-box">
-                        <h2>Game history</h2>
+                        <h2>Games played</h2>
                         {historyItems.length > 0 ? (
                             historyItems.map((game, i) => <p key={i}>{game.name}</p>)
                         ) : (
