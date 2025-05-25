@@ -127,9 +127,76 @@
     margin-top: 60px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 600px) {
+    .login-card {
+        padding: 20px;
+        max-width: 300px;
+    }
+
+    .login-heading {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .input-group input {
+        font-size: 14px;
+        padding: 10px 5px;
+    }
+
+    .signin-button {
+        font-size: 14px;
+        padding: 10px 0;
+    }
+
+    .signup-prompt {
+        font-size: 12px;
+    }
+
+    .forgot-password a {
+        font-size: 12px;
+    }
     .auth-wrapper {
+        gap: 10px;
         flex-direction: column;
         align-items: center;
     }
 }
+
+@media (max-width: 480px) {
+    .login-card {
+        padding: 9px;
+        max-width: 250px;
+    }
+
+    .login-heading {
+        font-size: 13px;
+        margin-bottom: 12px;
+    }
+
+    .input-group input {
+        font-size: 11px;
+        padding: 5px 3px;
+    }
+
+    .signin-button {
+        font-size: 12px;
+        padding: 8px 0;
+    }
+
+    .signup-prompt {
+        font-size: 9px;
+    }
+
+    .forgot-password a {
+        font-size: 9px;
+    }
+
+    .auth-wrapper {
+        gap: 10px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+
+}
+

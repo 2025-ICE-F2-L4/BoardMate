@@ -260,13 +260,109 @@ textarea {
   font-weight: bold;
 }
 
-@media (max-width: 768px) {
-  .rating-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .user-stars {
-    margin: 5px 0;
-  }
+@media (max-width: 600px) {
+    .rating-score {
+        font-size: 14px;
+    }
+
+    .rating-count {
+        font-size: 12px;
+    }
+
+    .user-review p {
+        font-size: 12px;
+    }
+
+    .star-filled,
+    .star-empty,
+    .user-stars svg {
+        font-size: 14px !important;
+    }
+
+    .submit-rating {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+
+    .delete-rating-button {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+
+    .rating-system h2,
+    .ratings-list h3,
+    .rating-header .username,
+    .rating-header .rating-date,
+    .rating-comment,
+    .user-existing-rating h3,
+    .user-existing-rating .rating-date,
+    .user-existing-rating .user-comment {
+        font-size: 12px !important;
+    }
+
+    .star-filled,
+    .star-empty,
+    .user-stars svg {
+        font-size: 14px !important;
+    }
+
+    .submit-rating,
+    .delete-rating-button {
+        font-size: 12px !important;
+        padding: 6px 12px !important;
+    }
 }
+
+@media (max-width: 480px) {
+    .rating-score {
+        font-size: 10px;
+    }
+
+    .rating-count {
+        font-size: 7px;
+    }
+
+    .user-review p {
+        font-size: 9px;
+    }
+
+    .star-filled,
+    .star-empty,
+    .user-stars svg {
+        font-size: 12px !important;
+    }
+
+    .submit-rating {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+
+    .delete-rating-button {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+
+    .rating-system h2,
+    .ratings-list h3,
+    .rating-header .username,
+    .rating-header .rating-date,
+    .rating-comment,
+    .user-existing-rating h3,
+    .user-existing-rating .rating-date,
+    .user-existing-rating .user-comment {
+        font-size: 12px !important;
+    }
+
+    .star-filled,
+    .star-empty,
+    .user-stars svg {
+        font-size: 12px !important;
+    }
+
+    .submit-rating,
+    .delete-rating-button {
+        font-size: 10px !important;
+        padding: 4px 8px !important;
+    }
+}
+

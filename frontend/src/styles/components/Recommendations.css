@@ -92,7 +92,7 @@
 .recommendations-error {
   text-align: center;
   padding: 15px;
-  margin: 20px auto;
+  margin: 50px auto;
   max-width: 600px;
   border-radius: 8px;
 }
@@ -107,26 +107,91 @@
   color: #ffffff;
 }
 
-@media (max-width: 768px) {
-  .recommendations-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
+@media (max-width: 600px) {
+    .recommendation-item {
+        flex: 1 1 45%;
+        min-width: 130px;
+        max-width: 160px;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+
+    .recommendation-details {
+        font-size: 0.8rem;
+    }
+
+    .genre-tag {
+        font-size: 0.7rem;
+        padding: 2px 6px;
+    }
+
+    .recommendations-container h2 {
+        font-size: 1.2rem;
+    }
+
+    .recommendations-container {
+        margin: 100px 0 0 0;
+    }
+
+
+    .recommendation-name {
+        font-size: 0.8rem;
+    }
+
+    .recommendations-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+    }
+
+    .recommendations-loading {
+        margin-top: 80px;
+        font-size: 0.9rem;
+    }
+
+
 }
 
 @media (max-width: 480px) {
-  .recommendations-container {
-    padding: 15px;
-  }
-  
-  .recommendations-container h2 {
-    font-size: 1.4rem;
-  }
-  
-  .recommendations-list {
-    grid-template-columns: 1fr;
-  }
-  
-  .recommendation-item {
-    padding: 12px;
-  }
+    .recommendations-list {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .recommendation-item {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .recommendation-name {
+        font-size: 0.9rem;
+    }
+
+    .recommendation-details {
+        font-size: 0.6rem;
+    }
+
+    .genre-tag {
+        font-size: 0.6rem;
+        padding: 2px 4px;
+    }
+
+    .recommendations-container h2 {
+        font-size: 1rem;
+    }
+
+    .recommendations-container {
+        margin: 100px 0 0 0;
+    }
+
+
+    .recommendation-name {
+        font-size: 0.8rem;
+    }
+
+    .recommendations-loading {
+        margin-top: 80px;
+        font-size: 0.9rem;
+    }
+
 }

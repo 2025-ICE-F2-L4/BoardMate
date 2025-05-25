@@ -45,3 +45,12 @@
   .back-button:hover {
     background-color: #351f7a;
   }
+
+html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+* {
+    box-sizing: border-box;
+}

@@ -53,28 +53,6 @@
     margin: 20px 0;
 }
 
-@media (max-width: 480px) {
-    .game-details {
-        width: 85%;
-        margin: 70px auto 10px auto;
-        padding: 12px;
-    }
-    
-    .game-details h1 {
-        font-size: 18px;
-        margin-bottom: 10px;
-    }
-
-    .game-info {
-        padding: 10px;
-        font-size: 12px;
-    }
-    
-    .game-info p {
-        margin: 7px 0;
-    }
-}
-
 .game-actions {
     display: flex;
     gap: 15px;
@@ -105,4 +83,77 @@
     background-color: #c0392b;
 
 }
+
+@media (max-width: 600px) {
+    .game-details {
+        width: 85%;
+        margin: 70px auto 10px auto;
+        padding: 12px;
+    }
+    
+    .game-details h1 {
+        font-size: 20px;
+        margin-bottom: 10px;
+
+    }
+
+    .game-info {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .game-info p {
+        margin: 6px 0;
+        font-size: 13px;
+
+    }
+
+    .genre-tag {
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+
+    .action-button {
+        font-size: 12px;
+        padding: 8px 14px;
+    }
+
+    .back-button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+}
+
+@media (max-width: 480px) {
+    .game-details h1 {
+        font-size: 16px;
+    }
+
+    .game-info {
+        font-size: 12px;
+    }
+    
+    .game-info p {
+        font-size: 11px;
+
+    }
+
+    .genre-tag {
+        font-size: 10px;
+        padding: 3px 6px;
+    }
+
+    .action-button {
+        font-size: 10px;
+        padding: 6px 10px;
+    }
+
+    .back-button {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+
+}
+
 

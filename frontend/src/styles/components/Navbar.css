@@ -1,5 +1,7 @@
 .navbar {
     width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -55,7 +57,7 @@
     }
 
     .logo-image {
-        height: 40px;
+        height: 45px;
     }
 
     .nav-buttons-container {
@@ -64,8 +66,8 @@
     }
 
     .nav-button {
-        font-size: 0.5rem;
-        padding: 4px 6px;
+        font-size: 0.55rem;
+        padding: 3px 4px;
         margin: 0;
     }
 

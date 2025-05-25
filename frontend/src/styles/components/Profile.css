@@ -133,3 +133,50 @@
     background-color: #c0392b;
 
 }
+
+
+
+@media (max-width: 600px) {
+
+    .profile-page {
+        margin-top: 50px;
+        padding: 10px;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+
+    .profile-left,
+    .wishlist-box,
+    .history-box {
+        width: 90% !important;
+        min-width: auto;
+        max-width: 100%;
+        padding: 10px;
+    }
+
+    .profile-picture {
+        width: 80px;
+        height: 80px;
+    }
+
+    .username {
+        font-size: 16px;
+    }
+
+    .wishlist-box h2, .history-box h2 {
+        font-size: 14px;
+    }
+
+    .game-link, .wishlist-box p, .history-box p {
+        font-size: 10px;
+    }
+
+    .biotext, .edit-bio-button, .save-bio-button, .clear-button {
+        font-size: 10px;
+        padding: 5px 10px;
+    }
+}

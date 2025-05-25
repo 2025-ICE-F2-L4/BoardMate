@@ -1,6 +1,5 @@
 ﻿import React, { useState, useEffect } from "react";
 import '../styles/components/Profile.css';
-import { Link } from "react-router-dom";
 
 function Profile() {
     const [bio, setBio] = useState("");
