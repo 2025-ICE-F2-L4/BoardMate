@@ -127,6 +127,44 @@
     margin-top: 60px;
 }
 
+.age-select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.age-select option {
+    background-color: white;
+    color: black;
+}
+
+.success-message {
+    background-color: rgba(52, 199, 89, 0.2);
+    color: #34c759;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.error-message {
+    background-color: rgba(255, 59, 48, 0.2);
+    color: #ff3b30;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    animation: fadeIn 0.3s ease-in;
+}
+
 @media (max-width: 600px) {
     .login-card {
         padding: 20px;
